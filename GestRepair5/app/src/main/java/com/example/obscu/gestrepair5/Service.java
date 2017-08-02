@@ -52,6 +52,7 @@ public class Service extends Activity {
                 JSONArray jsonArray = null;
                 try {
                     jsonArray = response.getJSONArray("data");
+
                     JSONObject jsonObject = (JSONObject) jsonArray.get(0);
                     name = jsonObject.getString("nameService");
                     jdescription = jsonObject.getString("priceService");

@@ -14,7 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/login_password"
-        android:text="password"/>
+        android:text="password"
+        android:inputType="textPassword"
+        />
 
     <Button
         android:id="@+id/bn_login"

@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         TextView username = (TextView) findViewById(R.id.username);
         TextView password = (TextView) findViewById(R.id.password);
 
-        System.out.println(username+" "+password);
         Ip ip = new Ip();
         String url = ip.stIp()+"/login";
         Log.w(username.toString(),password.toString());
+
         /*
         AuthRequest auth = new AuthRequest();
 
