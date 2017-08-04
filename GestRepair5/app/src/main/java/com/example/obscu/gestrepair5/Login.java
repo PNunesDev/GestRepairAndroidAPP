@@ -129,6 +129,37 @@ public class Login extends AppCompatActivity {
                             public void onResponse(String response) {
                                 // response
                                 Log.d("Response", response);
+                                String Json = response;
+                                try {
+                                    JSONObject obj = new JSONObject(response);
+                                    JSONObject data = obj.getJSONObject("data");
+                                    String name = data.getString("name");
+                                    /*Context context = getApplicationContext();
+                                    CharSequence text = name;
+                                    int duration = Toast.LENGTH_SHORT;
+
+                                    Toast toast = Toast.makeText(context, text, duration);
+                                    toast.show();*/
+
+
+
+
+                                    Intent intent = new Intent(getBaseContext(), PostLogin.class);
+                                    intent.putExtra("response", response);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("password", password);
+                                    startActivity(intent);
+
+
+                                    /*Intent i = new Intent (Login.this, PostLogin.class);
+
+                                    i.putExtra(response,Json);
+                                    startActivity(i);*/
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
                         },
                         new Response.ErrorListener()
@@ -137,6 +168,7 @@ public class Login extends AppCompatActivity {
                             public void onErrorResponse(VolleyError error) {
                                 // error
                                 Log.d("Error.Response", error.toString());
+
                             }
                         }
                 ) {
