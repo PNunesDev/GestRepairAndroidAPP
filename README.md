@@ -14,7 +14,7 @@ The Frontend JAVA can be found [here](https://github.com/barcelosrui/gestRepaird
 ## APP Android
 The APP Android can be found [here](https://github.com/PNunesDev/GestRepairAndroidAPP)
 
-#HOW TO USED
+##HOW TO USED
 
 1. Ensure that the database server is turned on.
 2. Clone the file database gestrepairdb.sql and import to database server.
