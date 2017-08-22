@@ -136,7 +136,8 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 // error
-                                Log.d("Error.Response", error.toString());
+                                Toast.makeText(Login.this,"Erro",Toast.LENGTH_LONG).show();
+                                error.printStackTrace();
                             }
                         }
                 ) {

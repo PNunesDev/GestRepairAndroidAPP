@@ -6,6 +6,6 @@ package com.example.obscu.gestrepair5;
 
 public class Ip {
     public String stIp(){
-        return "http://192.168.1.100:8080";
+        return "http://192.168.1.66:8080";
     }
 }

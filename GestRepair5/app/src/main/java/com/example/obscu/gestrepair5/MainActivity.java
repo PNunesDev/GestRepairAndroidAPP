@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             url= ip.stIp()+"/service";
-            Intent i = new Intent(MainActivity.this, Service.class);
+            Intent i = new Intent(MainActivity.this, ListServices.class);
             startActivity(i);
 
         } else if (id == R.id.nav_gallery) {
@@ -111,6 +111,8 @@ public class MainActivity extends AppCompatActivity
                 Intent i = new Intent(MainActivity.this, Login.class);
                 startActivity(i);
         } else if (id == R.id.nav_slideshow) {
+            Intent i = new Intent(MainActivity.this, Configurations.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_manage) {
 
