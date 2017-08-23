@@ -1,9 +1,12 @@
 package com.example.obscu.gestrepair5;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,11 +24,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ListServices extends AppCompatActivity {
+public class ListServices extends AppCompatActivity{
 
     RequestQueue rq;
     String name;
+    ListView list;
 
     ArrayList<String> servicedata = new ArrayList<String>();
     Ip ip = new Ip();
@@ -35,7 +40,9 @@ public class ListServices extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_services);
+        ListView list = (ListView) findViewById(R.id.lst_Service);
         rq = Volley.newRequestQueue(this);
+
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -50,8 +57,16 @@ public class ListServices extends AppCompatActivity {
                         servicedata.add(name);
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListServices.this, R.layout.activity_list_services_main, servicedata);
-                    ListView list = (ListView) findViewById(R.id.lst_Service);
+                    final ListView list = (ListView) findViewById(R.id.lst_Service);
                     list.setAdapter(adapter);
+                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(ListServices.this, Service.class);
+                            intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
+                            startActivity(intent);
+                        }
+                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -64,11 +79,25 @@ public class ListServices extends AppCompatActivity {
                 CharSequence text = "Não foi possivel ligar à internet";
                 int duration = Toast.LENGTH_LONG;
 
+                String[] name= {"Bate-Chapas","Inspeção Automóvel","Diagonóstico","Alinhamento de suspensão","Suspensão","Pintura","Revisão"};
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListServices.this, R.layout.activity_list_services_main, name);
+                final ListView list = (ListView) findViewById(R.id.lst_Service);
+                list.setAdapter(adapter);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(ListServices.this, Service.class);
+                        intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
+                        startActivity(intent);
+                    }
+                });
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+
             }
         });
 
         rq.add(jsonObjectRequest);
     }
+
 }
