@@ -117,6 +117,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            Intent i = new Intent(MainActivity.this, ListRepair.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_send) {
 

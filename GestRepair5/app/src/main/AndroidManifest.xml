@@ -39,7 +39,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginSucess" />
         <activity android:name=".Configurations" />
-        <activity android:name=".ListServices"></activity>
+        <activity android:name=".ListServices" />
+        <activity android:name=".Repair" />
+        <activity android:name=".ListRepair"></activity>
     </application>
 
 </manifest>

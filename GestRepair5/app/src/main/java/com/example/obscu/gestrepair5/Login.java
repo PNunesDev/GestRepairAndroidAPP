@@ -129,6 +129,17 @@ public class Login extends AppCompatActivity {
                             public void onResponse(String response) {
                                 // response
                                 Log.d("Response", response);
+
+                                //Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
+                                String[] data = new String[2];
+                                data[0] = username;
+                                data[1] = password;
+                                Toast.makeText(Login.this,data[0],Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(Login.this, ListRepair.class);
+                                Bundle bundle = new Bundle();
+                                intent.putExtra("cred", data);
+                                intent.putExtras(bundle);
+
                             }
                         },
                         new Response.ErrorListener()
@@ -136,7 +147,7 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 // error
-                                Toast.makeText(Login.this,"Erro",Toast.LENGTH_LONG).show();
+                                //Toast.makeText(Login.this,"Erro",Toast.LENGTH_LONG).show();
                                 error.printStackTrace();
                             }
                         }

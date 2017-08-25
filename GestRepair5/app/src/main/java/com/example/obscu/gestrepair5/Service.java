@@ -1,9 +1,11 @@
 package com.example.obscu.gestrepair5;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -53,10 +55,13 @@ public class Service extends Activity {
                 JSONArray jsonArray = null;
                 try {
                     jsonArray = response.getJSONArray("data");
-                    Bundle bundle = getIntent().getExtras();
+                    Intent Intent = getIntent();
+                    int intValue = Intent.getIntExtra("position", 0);
+                    Log.i("TAG", intValue+"");
 
-                        JSONObject jsonObject = (JSONObject) jsonArray.get(bundle.getInt("ServiceType"));
-                    //JSONObject jsonObject = (JSONObject) jsonArray.get(0);
+
+                    //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
                     name = jsonObject.getString("nameService");
                     jdescription = jsonObject.getString("priceService");
                     jdescription = jsonObject.getString("description");

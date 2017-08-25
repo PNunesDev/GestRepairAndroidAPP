@@ -2,8 +2,10 @@ package com.example.obscu.gestrepair5;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,7 +27,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ListServices extends AppCompatActivity{
 
@@ -58,16 +63,20 @@ public class ListServices extends AppCompatActivity{
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListServices.this, R.layout.activity_list_services_main, servicedata);
                     final ListView list = (ListView) findViewById(R.id.lst_Service);
-                    list.setAdapter(adapter);
+
+
                     list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent intent = new Intent(ListServices.this, Service.class);
-                            intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
+                            intent.putExtra("position", position);
+
                             startActivity(intent);
+
                         }
                     });
 
+                    list.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -79,7 +88,7 @@ public class ListServices extends AppCompatActivity{
                 CharSequence text = "Não foi possivel ligar à internet";
                 int duration = Toast.LENGTH_LONG;
 
-                String[] name= {"Bate-Chapas","Inspeção Automóvel","Diagonóstico","Alinhamento de suspensão","Suspensão","Pintura","Revisão"};
+                String[] name= {"Bate-Chapas Not","Inspeção Automóvel","Diagonóstico","Alinhamento de suspensão","Suspensão","Pintura","Revisão"};
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListServices.this, R.layout.activity_list_services_main, name);
                 final ListView list = (ListView) findViewById(R.id.lst_Service);
                 list.setAdapter(adapter);
@@ -87,7 +96,7 @@ public class ListServices extends AppCompatActivity{
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(ListServices.this, Service.class);
-                        intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
+                        intent.putExtra("ServiceType", position);
                         startActivity(intent);
                     }
                 });
