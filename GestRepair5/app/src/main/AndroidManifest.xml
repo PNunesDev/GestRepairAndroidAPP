@@ -41,7 +41,11 @@
         <activity android:name=".Configurations" />
         <activity android:name=".ListServices" />
         <activity android:name=".Repair" />
-        <activity android:name=".ListRepair"></activity>
+        <activity android:name=".ListRepair" />
+        <activity
+            android:name=".ListVehicles"
+            android:label="@string/title_activity_list_vehicles"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

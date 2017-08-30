@@ -4,8 +4,10 @@
     android:layout_height="match_parent">
 
     <ListView
-        android:id="@+id/lst_Repair"
+        android:id="@+id/lst_Vehicles"
         android:layout_width="match_parent"
-        android:layout_height="429dp" />
-
+        android:layout_height="508dp"
+        android:fontFamily="verdana"
+        android:padding="1dp"
+        />
 </LinearLayout>
