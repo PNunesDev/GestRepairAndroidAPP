@@ -37,14 +37,43 @@
             android:name=".Login"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LoginSucess" />
         <activity android:name=".Configurations" />
         <activity android:name=".ListServices" />
-        <activity android:name=".Repair" />
-        <activity android:name=".ListRepair" />
         <activity
             android:name=".ListVehicles"
             android:label="@string/title_activity_list_vehicles"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Schedule_Service"
+            android:label="@string/title_activity_schedule__service"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ListScheduleService"
+            android:label="@string/title_activity_list_schedule_service"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ListBudgets"
+            android:label="@string/title_activity_list_budgets"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Budgets"
+            android:label="@string/title_activity_budgets"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Vehicle"
+            android:label="@string/title_activity_vehicle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ListRepair"
+            android:label="@string/title_activity_list_repair"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Repair"
+            android:label="@string/title_activity_repair"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SetScheduleService"
+            android:label="@string/title_activity_set_schedule_service"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

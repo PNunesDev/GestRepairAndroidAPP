@@ -22,4 +22,14 @@
         completions."
     </string>
     <string name="title_activity_list_vehicles">ListVehicles</string>
+    <string name="title_activity_schedule">Schedule</string>
+    <string name="title_activity_schedule__service">Schedule_Service</string>
+    <string name="title_activity_list_schedule">ListSchedule</string>
+    <string name="title_activity_list_schedule_service">ListScheduleService</string>
+    <string name="title_activity_list_budgets">ListBudgets</string>
+    <string name="title_activity_budgets">Budgets</string>
+    <string name="title_activity_vehicle">Vehicle</string>
+    <string name="title_activity_list_repair">ListRepair</string>
+    <string name="title_activity_repair">Repair</string>
+    <string name="title_activity_set_schedule_service">SetScheduleService</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.obscu.gestrepair5;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -26,34 +28,31 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Repair extends AppCompatActivity {
+public class Budgets extends AppCompatActivity {
 
     RequestQueue rq;
 
-    TextView txtRegistration, txtPrice, txtDiagnosis, txtRepairData,txtStatus, txtEntry, txtOut;
+    TextView txtRegistration, txtState, txtPrice, txtProcess, txtRepair;
 
-    String SRegistration, SPrice, SDiagnosis, SRepairData, SStatus, SEntry, SOut;
-
+    String SRegistration, SState, SPrice, SProcess, SRepair;
 
     String username ="rbarcelos";
     String password ="123qwe";
 
     Ip ip = new Ip();
-    String url= ip.stIp()+"/repair/user/1";
+    String url= ip.stIp()+"/budget/1";
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repair);
+        setContentView(R.layout.activity_budgets);
         rq = Volley.newRequestQueue(this);
 
-        txtRegistration = (TextView) findViewById(R.id.txt_Repair_Registration_Value);
-        txtPrice = (TextView) findViewById(R.id.txt_Repair_Price_Value);
-        txtDiagnosis = (TextView) findViewById(R.id.txt_Repair_UserDiagnosis_Value);
-        txtRepairData = (TextView) findViewById(R.id.txt_Repair_RepairData_Value);
-        txtStatus = (TextView) findViewById(R.id.txt_Repair_Status_Value);
-        txtEntry = (TextView) findViewById(R.id.txt_Repair_Entry_Value);
-        txtOut = (TextView) findViewById(R.id.txt_Repair_Out_Value);
+        txtRegistration = (TextView) findViewById(R.id.txt_RegistrationValue);
+        txtState = (TextView) findViewById(R.id.txt_StatValue);
+        txtPrice = (TextView) findViewById(R.id.txt_PriceValue);
+        txtProcess = (TextView) findViewById(R.id.txt_ProcessBegin);
+        txtRepair = (TextView) findViewById(R.id.txt_RepairTimeValue);
 
         sendjsonrequest();
     }
@@ -71,24 +70,28 @@ public class Repair extends AppCompatActivity {
                     int intValue = Intent.getIntExtra("position", 0);
                     Log.i("TAG", intValue+"");
 
+
                     //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
                     JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
-                    SRegistration = jsonObject.getString("registration");
+                    SRegistration = jsonObject.getString("vehicle");
+                    SState = jsonObject.getString("state");
                     SPrice = jsonObject.getString("price");
-                    SDiagnosis = jsonObject.getString("description");
-                    SRepairData = jsonObject.getString("information");
-                    SStatus = jsonObject.getString("nameState");
-                    SEntry = jsonObject.getString("startDate");
-                    SOut = jsonObject.getString("finishDate");
+                    SProcess = jsonObject.getString("processOpen");
+                    SRepair = jsonObject.getString("repairTime");
+
+
+                    /*jdescription = jsonObject.getString("priceService");
+                    jdescription = jsonObject.getString("description");
+                    jimage=jsonObject.getString("photo");*/
 
                     txtRegistration.setText(SRegistration);
+                    txtState.setText(SState);
                     txtPrice.setText(SPrice);
-                    txtDiagnosis.setText(SDiagnosis);
-                    txtRepairData.setText(SRepairData);
-                    txtStatus.setText(SStatus);
-                    txtEntry.setText(SEntry);
-                    txtOut.setText(SOut);
-
+                    txtProcess.setText(SProcess);
+                    txtRepair.setText(SRepair);
+                   /* priceService.setText(jdescription);
+                    descriptionService.setText(jdescription);
+                    imageService.setText(jimage);*/
 
 
                 } catch (JSONException e) {
@@ -114,5 +117,4 @@ public class Repair extends AppCompatActivity {
         rq.add(jsonObjectRequest);
     }
 }
-
 

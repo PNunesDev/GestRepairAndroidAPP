@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.obscu.gestrepair5.Budgets">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/appBarLayout4"
+        android:layout_width="394dp"
+        android:layout_height="57dp"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp" />
+
+
+    <include
+        layout="@layout/content_budgets"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout4"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/include4"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/txt_RepairTimeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:text="AEF"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toRightOf="@+id/txt_RepairTime"
+        app:layout_constraintTop_toBottomOf="@+id/txt_StateValue" />
+
+    <TextView
+        android:id="@+id/txt_RepairTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="31dp"
+        android:text="Tempo de Reparação:"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_ProcessBegin" />
+
+    <TextView
+        android:id="@+id/txt_PriceValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="90dp"
+        android:text="AEF"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toRightOf="@+id/txt_Price"
+        app:layout_constraintTop_toBottomOf="@+id/txt_RegistrationValue" />
+
+    <TextView
+        android:id="@+id/txt_StatValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="57dp"
+        android:layout_marginTop="31dp"
+        android:text="AEF"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toRightOf="@+id/txt_State"
+        app:layout_constraintTop_toBottomOf="@+id/txt_RegistrationValue" />
+
+    <TextView
+        android:id="@+id/txt_StateValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="150dp"
+        android:text="AEF"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toRightOf="@+id/txt_ProcessBegin"
+        app:layout_constraintTop_toBottomOf="@+id/txt_RegistrationValue" />
+
+    <TextView
+        android:id="@+id/txt_Registration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Matricula:"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include4"
+        android:layout_marginTop="33dp" />
+
+    <TextView
+        android:id="@+id/txt_State"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="31dp"
+        android:text="Estado:"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Registration" />
+
+    <TextView
+        android:id="@+id/txt_Price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="31dp"
+        android:text="Preço:"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_State" />
+
+    <TextView
+        android:id="@+id/txt_ProcessBegin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="31dp"
+        android:text="Início do Processo:"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Price" />
+
+    <TextView
+        android:id="@+id/txt_RegistrationValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="33dp"
+        android:text="AEF"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toRightOf="@+id/txt_Registration"
+        app:layout_constraintTop_toTopOf="@+id/include4" />
+
+</android.support.constraint.ConstraintLayout>

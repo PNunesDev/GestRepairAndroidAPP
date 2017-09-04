@@ -37,7 +37,7 @@ public class ListVehicles extends AppCompatActivity {
     ListView list;
     int n=1;
     String username ="rbarcelos";
-    String password ="123we";
+    String password ="123qwe";
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
@@ -72,8 +72,16 @@ public class ListVehicles extends AppCompatActivity {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListVehicles.this, R.layout.activity_list_vehicles_main, Vehicles);
                     final ListView list = (ListView) findViewById(R.id.lst_Vehicles);
 
-                    list.setAdapter(adapter);
+                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                    @Override
+                                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                        Intent intent = new Intent(ListVehicles.this, Vehicle.class);
+                                                        intent.putExtra("position", position);
 
+                                                        startActivity(intent);
+                                                    }
+                                                });
+                    list.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

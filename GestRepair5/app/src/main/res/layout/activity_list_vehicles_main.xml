@@ -4,6 +4,6 @@
     android:layout_height="match_parent"
     android:fontFamily="verdana"
     android:padding="1dp"
-    android:textSize="30dp"
+    android:textSize="20dp"
     >
 </TextView>

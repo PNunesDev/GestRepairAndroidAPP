@@ -3,37 +3,37 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/ListServices"
             android:icon="@drawable/ic_menu_camera"
             android:title="Serviços" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/Login"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Autenticar" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Configurações" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Agendamentos" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Autenticado">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/ListVehicles"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Histórico de reparações" />
+                android:title="Listar Veículos" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Orçamentos" />
+                android:id="@+id/ListSchedules"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Ver Agendamentos" />
             <item
-                android:id="@+id/nav_receive"
+                android:id="@+id/ScheduleService"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Agendar Serviços" />
+            <item
+                android:id="@+id/ListRepairs"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Sobre" />
+                android:title="Ver Reparações" />
+            <item
+                android:id="@+id/ListBudgets"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Ver Orçamentos" />
         </menu>
     </item>
 

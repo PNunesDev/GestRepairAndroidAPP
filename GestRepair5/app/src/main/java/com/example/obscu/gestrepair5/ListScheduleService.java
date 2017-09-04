@@ -31,25 +31,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ListRepair extends AppCompatActivity {
+public class ListScheduleService extends AppCompatActivity {
 
     RequestQueue rq;
     ListView list;
-    int n=1;
-    String username ="rbarcelos";
-    String password ="123qwe";
+    int n = 1;
+    String username = "rbarcelos";
+    String password = "123qwe";
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
-    String url = ip.stIp() + "/repair/user/1";
+    String url = ip.stIp() + "/schedule/1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_repair);
+        setContentView(R.layout.activity_list_schedule);
+        ListView list = (ListView) findViewById(R.id.lst_Vehicles);
+        final TextView barcel = (TextView) findViewById(R.id.textView);
         rq = Volley.newRequestQueue(this);
-
-
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -61,24 +61,26 @@ public class ListRepair extends AppCompatActivity {
                     String[][] name = new String[data.length()][3];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject datas = (JSONObject) data.get(i);
-                        name[i][0] = datas.getString("registration");
-                        name[i][1] = datas.getString("nameState");
-                        Vehicles.add("Reparação Nº "+name[i][0]+" - "+name[i][1]);
+                        name[i][0] = datas.getString("idSchedule");
+                        name[i][1] = datas.getString("vehicle");
+                        Vehicles.add("Marcação Nº "+name[i][0] + " - " + name[i][1]);
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListRepair.this, R.layout.activity_list_vehicles_main, Vehicles);
-                    final ListView list = (ListView) findViewById(R.id.lst_ListRepair);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListScheduleService.this, R.layout.activity_list_vehicles_main, Vehicles);
+                    final ListView list = (ListView) findViewById(R.id.lst_Vehicles);
 
                     list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent intent = new Intent(ListRepair.this, Repair.class);
+                            Intent intent = new Intent(ListScheduleService.this, Schedule_Service.class);
                             intent.putExtra("position", position);
 
                             startActivity(intent);
                         }
                     });
+
                     list.setAdapter(adapter);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -94,10 +96,10 @@ public class ListRepair extends AppCompatActivity {
                 toast.show();
 
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String credentials = username + ":" + password ;
+                String credentials = username + ":" + password;
                 String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Basic " + base64EncodedCredentials);
@@ -108,4 +110,3 @@ public class ListRepair extends AppCompatActivity {
         rq.add(jsonObjectRequest);
     }
 }
-

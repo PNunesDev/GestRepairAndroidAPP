@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,7 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ListRepair extends AppCompatActivity {
+public class ListBudgets extends AppCompatActivity {
 
     RequestQueue rq;
     ListView list;
@@ -41,16 +40,16 @@ public class ListRepair extends AppCompatActivity {
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
-    String url = ip.stIp() + "/repair/user/1";
+    String url = ip.stIp() + "/budget/1";
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_repair);
+        setContentView(R.layout.activity_list_budgets);
         rq = Volley.newRequestQueue(this);
-
-
-
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -58,27 +57,29 @@ public class ListRepair extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray data = (JSONArray) response.get("data");
+
                     String[][] name = new String[data.length()][3];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject datas = (JSONObject) data.get(i);
-                        name[i][0] = datas.getString("registration");
-                        name[i][1] = datas.getString("nameState");
-                        Vehicles.add("Reparação Nº "+name[i][0]+" - "+name[i][1]);
+                        name[i][0] = datas.getString("idBudget");
+                        name[i][1] = datas.getString("vehicle");
+                        name[i][2] = datas.getString("state");
+                        Vehicles.add("Orçamento nº: "+name[i][0]+" - "+name[i][1]+" - "+name[i] [2]);
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListRepair.this, R.layout.activity_list_vehicles_main, Vehicles);
-                    final ListView list = (ListView) findViewById(R.id.lst_ListRepair);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListBudgets.this, R.layout.activity_list_vehicles_main, Vehicles);
+                    final ListView list = (ListView) findViewById(R.id.lst_budget);
+                    list.setAdapter(adapter);
 
                     list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent intent = new Intent(ListRepair.this, Repair.class);
-                            intent.putExtra("position", position);
-
+                            Intent intent = new Intent(ListBudgets.this, Budgets.class);
+                            intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
                             startActivity(intent);
                         }
                     });
-                    list.setAdapter(adapter);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -108,4 +109,3 @@ public class ListRepair extends AppCompatActivity {
         rq.add(jsonObjectRequest);
     }
 }
-

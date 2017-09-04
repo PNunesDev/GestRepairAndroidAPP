@@ -101,27 +101,41 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        //1 - Lista serviços
+        if (id == R.id.ListServices) {
             url= ip.stIp()+"/service";
             Intent i = new Intent(MainActivity.this, ListServices.class);
             startActivity(i);
 
-        } else if (id == R.id.nav_gallery) {
-                //url= ip.stIp()+"/login";
-                Intent i = new Intent(MainActivity.this, Login.class);
-                startActivity(i);
-        } else if (id == R.id.nav_slideshow) {
-            Intent i = new Intent(MainActivity.this, Configurations.class);
+        //2- Autenticação
+        } else if (id == R.id.Login) {
+            //url= ip.stIp()+"/login";
+            Intent i = new Intent(MainActivity.this, Login.class);
             startActivity(i);
 
-        } else if (id == R.id.nav_manage) {
+         //3- Listar Veículos
+        } else if (id == R.id.ListVehicles) {
+            Intent i = new Intent(MainActivity.this, ListVehicles.class);
+            startActivity(i);
 
-        } else if (id == R.id.nav_share) {
+        //4 - Ver Agendamentos
+        } else if (id == R.id.ListSchedules) {
+            Intent i = new Intent(MainActivity.this, ListScheduleService.class);
+            startActivity(i);
+
+        //5 - Agendar Serviços
+        } else if (id == R.id.ScheduleService) {
+            Intent i = new Intent(MainActivity.this, SetScheduleService.class);
+            startActivity(i);
+
+        //6 - Ver Reparação
+        } else if (id == R.id.ListRepairs) {
             Intent i = new Intent(MainActivity.this, ListRepair.class);
             startActivity(i);
 
-        } else if (id == R.id.nav_send) {
-            Intent i = new Intent(MainActivity.this, ListVehicles.class);
+        //7 - Ver Orçamentos
+        } else if (id == R.id.ListBudgets) {
+            Intent i = new Intent(MainActivity.this, ListBudgets.class);
             startActivity(i);
         }
 

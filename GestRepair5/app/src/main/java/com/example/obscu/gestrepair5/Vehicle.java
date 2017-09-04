@@ -1,5 +1,6 @@
 package com.example.obscu.gestrepair5;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -26,34 +28,33 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Repair extends AppCompatActivity {
-
+public class Vehicle extends AppCompatActivity {
     RequestQueue rq;
 
-    TextView txtRegistration, txtPrice, txtDiagnosis, txtRepairData,txtStatus, txtEntry, txtOut;
-
-    String SRegistration, SPrice, SDiagnosis, SRepairData, SStatus, SEntry, SOut;
-
+     TextView Registration, CC, Km, Fuel, RegisterDate, FrontTire, BackTire,  txtRegistration;
+    String SRegistration, SCC, SKm, SFuel, SRegisterDate, SFrontTire, SBackTire;
 
     String username ="rbarcelos";
     String password ="123qwe";
 
     Ip ip = new Ip();
-    String url= ip.stIp()+"/repair/user/1";
+    String url= ip.stIp()+"/vehicle/1/user";
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repair);
+        setContentView(R.layout.content_vehicle);
         rq = Volley.newRequestQueue(this);
 
-        txtRegistration = (TextView) findViewById(R.id.txt_Repair_Registration_Value);
-        txtPrice = (TextView) findViewById(R.id.txt_Repair_Price_Value);
-        txtDiagnosis = (TextView) findViewById(R.id.txt_Repair_UserDiagnosis_Value);
-        txtRepairData = (TextView) findViewById(R.id.txt_Repair_RepairData_Value);
-        txtStatus = (TextView) findViewById(R.id.txt_Repair_Status_Value);
-        txtEntry = (TextView) findViewById(R.id.txt_Repair_Entry_Value);
-        txtOut = (TextView) findViewById(R.id.txt_Repair_Out_Value);
+
+        Registration = (TextView) findViewById(R.id.txtRegistrationValue);
+        txtRegistration = (TextView) findViewById(R.id.txt_StatValue);
+        CC = (TextView) findViewById(R.id.txtCCValue);
+        Km = (TextView) findViewById(R.id.txtKMValue);
+        Fuel = (TextView) findViewById(R.id.txtFuelValue);
+        RegisterDate = (TextView) findViewById(R.id.txtDateRegisterValue);
+        FrontTire = (TextView) findViewById(R.id.txtFrontTireValue);
+        BackTire = (TextView) findViewById(R.id.txtBackTireValue);
 
         sendjsonrequest();
     }
@@ -62,34 +63,34 @@ public class Repair extends AppCompatActivity {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
+
             public void onResponse(JSONObject response) {
                 JSONArray jsonArray = null;
                 try {
-
                     jsonArray = response.getJSONArray("data");
                     Intent Intent = getIntent();
                     int intValue = Intent.getIntExtra("position", 0);
                     Log.i("TAG", intValue+"");
 
+
                     //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
                     JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
+
                     SRegistration = jsonObject.getString("registration");
-                    SPrice = jsonObject.getString("price");
-                    SDiagnosis = jsonObject.getString("description");
-                    SRepairData = jsonObject.getString("information");
-                    SStatus = jsonObject.getString("nameState");
-                    SEntry = jsonObject.getString("startDate");
-                    SOut = jsonObject.getString("finishDate");
+                    SCC = jsonObject.getString("displacement");
+                    SKm = jsonObject.getString("kilometers");
+                    SFuel = jsonObject.getString("nameFuel");
+                    SRegisterDate = jsonObject.getString("date");
+                    SFrontTire = jsonObject.getString("fronttiresize");
+                    SBackTire = jsonObject.getString("reartiresize");
 
-                    txtRegistration.setText(SRegistration);
-                    txtPrice.setText(SPrice);
-                    txtDiagnosis.setText(SDiagnosis);
-                    txtRepairData.setText(SRepairData);
-                    txtStatus.setText(SStatus);
-                    txtEntry.setText(SEntry);
-                    txtOut.setText(SOut);
-
-
+                    Registration.setText(SRegistration);
+                    CC.setText(SCC);
+                    Km.setText(SKm);
+                    Fuel.setText(SFuel);
+                    RegisterDate.setText(SRegisterDate);
+                    FrontTire.setText(SFrontTire);
+                    BackTire.setText(SBackTire);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -114,5 +115,3 @@ public class Repair extends AppCompatActivity {
         rq.add(jsonObjectRequest);
     }
 }
-
-

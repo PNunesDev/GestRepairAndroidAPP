@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,25 +32,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ListRepair extends AppCompatActivity {
-
-    RequestQueue rq;
+public class SetScheduleService extends AppCompatActivity {
+    RequestQueue rq,rq2;
+    String name;
     ListView list;
     int n=1;
     String username ="rbarcelos";
     String password ="123qwe";
 
     ArrayList<String> Vehicles = new ArrayList<String>();
+    ArrayList<String> Service = new ArrayList<String>();
     Ip ip = new Ip();
-    String url = ip.stIp() + "/repair/user/1";
+    String url = ip.stIp() + "/vehicle/1/user";
+    String url2 = ip.stIp() + "/service";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_repair);
+        setContentView(R.layout.content_schedule__service);
         rq = Volley.newRequestQueue(this);
-
-
+        rq2 = Volley.newRequestQueue(this);
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -61,24 +63,15 @@ public class ListRepair extends AppCompatActivity {
                     String[][] name = new String[data.length()][3];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject datas = (JSONObject) data.get(i);
-                        name[i][0] = datas.getString("registration");
-                        name[i][1] = datas.getString("nameState");
-                        Vehicles.add("Reparação Nº "+name[i][0]+" - "+name[i][1]);
+                        name[i][2] = datas.getString("registration");
+                        Vehicles.add(name[i][2]);
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListRepair.this, R.layout.activity_list_vehicles_main, Vehicles);
-                    final ListView list = (ListView) findViewById(R.id.lst_ListRepair);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(SetScheduleService.this, R.layout.activity_list_vehicles_main, Vehicles);
+                    Spinner spinnerVehicles = (Spinner) findViewById(R.id.spn_Vehicle);
+                    spinnerVehicles.setAdapter(adapter);
 
-                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent intent = new Intent(ListRepair.this, Repair.class);
-                            intent.putExtra("position", position);
-
-                            startActivity(intent);
-                        }
-                    });
-                    list.setAdapter(adapter);
+                    spinnerVehicles.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -94,10 +87,10 @@ public class ListRepair extends AppCompatActivity {
                 toast.show();
 
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String credentials = username + ":" + password ;
+                String credentials = username + ":" + password;
                 String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Basic " + base64EncodedCredentials);
@@ -106,6 +99,42 @@ public class ListRepair extends AppCompatActivity {
         };
 
         rq.add(jsonObjectRequest);
+
+
+
+        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET, url2, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray data = (JSONArray) response.get("data");
+                    String[][] name = new String[data.length()][3];
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject datas = (JSONObject) data.get(i);
+                        name[i][0] = datas.getString("nameService");
+                        Service.add(name[i][0]);
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(SetScheduleService.this, R.layout.activity_list_vehicles_main, Service);
+                    Spinner spinnerService = (Spinner) findViewById(R.id.spn_Service);
+                    spinnerService.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Context context = getApplicationContext();
+                CharSequence text = "Não foi possivel ligar à internet";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
+        });
+
+        rq2.add(jsonObjectRequest2);
     }
 }
-
