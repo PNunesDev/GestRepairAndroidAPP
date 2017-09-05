@@ -84,6 +84,9 @@ public class Vehicle extends AppCompatActivity {
                     SFrontTire = jsonObject.getString("fronttiresize");
                     SBackTire = jsonObject.getString("reartiresize");
 
+                    DateTime TM = new DateTime();
+                    SRegisterDate=TM.DateTime(SRegisterDate);
+
                     Registration.setText(SRegistration);
                     CC.setText(SCC);
                     Km.setText(SKm);

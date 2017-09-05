@@ -82,6 +82,8 @@ public class Schedule_Service extends AppCompatActivity {
                     SService = jsonObject.getString("service");
                     SDate = jsonObject.getString("date");
 
+                    DateTime TM = new DateTime();
+                    SDate=TM.DateTime(SDate);
 
                     Registration.setText(SRegistration);
                     Service.setText(SService);

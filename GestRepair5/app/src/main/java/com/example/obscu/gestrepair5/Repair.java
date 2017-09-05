@@ -81,6 +81,11 @@ public class Repair extends AppCompatActivity {
                     SEntry = jsonObject.getString("startDate");
                     SOut = jsonObject.getString("finishDate");
 
+                    DateTime TM = new DateTime();
+                    SEntry=TM.DateTime(SEntry);
+                    SOut=TM.DateTime(SOut);
+
+
                     txtRegistration.setText(SRegistration);
                     txtPrice.setText(SPrice);
                     txtDiagnosis.setText(SDiagnosis);
@@ -88,8 +93,6 @@ public class Repair extends AppCompatActivity {
                     txtStatus.setText(SStatus);
                     txtEntry.setText(SEntry);
                     txtOut.setText(SOut);
-
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

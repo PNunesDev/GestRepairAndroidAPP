@@ -79,6 +79,9 @@ public class Budgets extends AppCompatActivity {
                     SProcess = jsonObject.getString("processOpen");
                     SRepair = jsonObject.getString("repairTime");
 
+                    DateTime TM = new DateTime();
+                    SRepair=TM.DateTime(SRepair);
+
 
                     /*jdescription = jsonObject.getString("priceService");
                     jdescription = jsonObject.getString("description");
