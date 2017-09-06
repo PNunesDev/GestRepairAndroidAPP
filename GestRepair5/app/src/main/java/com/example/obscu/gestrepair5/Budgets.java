@@ -36,8 +36,10 @@ public class Budgets extends AppCompatActivity {
 
     String SRegistration, SState, SPrice, SProcess, SRepair;
 
-    String username ="rbarcelos";
-    String password ="123qwe";
+   // String username="rbarcelos";
+    //String password="123qwe";
+    String username, password;
+
 
     Ip ip = new Ip();
     String url= ip.stIp()+"/budget/1";
@@ -48,11 +50,17 @@ public class Budgets extends AppCompatActivity {
         setContentView(R.layout.activity_budgets);
         rq = Volley.newRequestQueue(this);
 
+
         txtRegistration = (TextView) findViewById(R.id.txt_RegistrationValue);
         txtState = (TextView) findViewById(R.id.txt_StatValue);
         txtPrice = (TextView) findViewById(R.id.txt_PriceValue);
-        txtProcess = (TextView) findViewById(R.id.txt_ProcessBegin);
+        txtProcess= (TextView) findViewById(R.id.txt_StateValue);
         txtRepair = (TextView) findViewById(R.id.txt_RepairTimeValue);
+
+        Intent Intent = getIntent();
+        username = Intent.getStringExtra("username");
+        password = Intent.getStringExtra("password");
+        Log.i("TAG",username+" - "+password+" TESTE");
 
         sendjsonrequest();
     }
@@ -66,6 +74,7 @@ public class Budgets extends AppCompatActivity {
                 try {
 
                     jsonArray = response.getJSONArray("data");
+
                     Intent Intent = getIntent();
                     int intValue = Intent.getIntExtra("position", 0);
                     Log.i("TAG", intValue+"");
@@ -80,7 +89,8 @@ public class Budgets extends AppCompatActivity {
                     SRepair = jsonObject.getString("repairTime");
 
                     DateTime TM = new DateTime();
-                    SRepair=TM.DateTime(SRepair);
+                    //SRepair=TM.DateTime(SRepair);
+                    //Log.i("TAG","SRepair...."+SRepair);
 
 
                     /*jdescription = jsonObject.getString("priceService");
@@ -90,8 +100,8 @@ public class Budgets extends AppCompatActivity {
                     txtRegistration.setText(SRegistration);
                     txtState.setText(SState);
                     txtPrice.setText(SPrice);
-                    txtProcess.setText(SProcess);
-                    txtRepair.setText(SRepair);
+                    txtProcess.setText(TM.DateTime(SProcess));
+                    txtRepair.setText(SRepair+" dias");
                    /* priceService.setText(jdescription);
                     descriptionService.setText(jdescription);
                     imageService.setText(jimage);*/
@@ -107,7 +117,8 @@ public class Budgets extends AppCompatActivity {
                 //typeService.setText("Ups, ocorreu um erro");
 
             }
-        }) {
+        })
+        {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 String credentials = username + ":" + password;

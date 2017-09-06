@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -24,9 +25,9 @@ public class MainActivity extends AppCompatActivity
     RequestQueue rq;
     Ip ip = new Ip();
     String url="";
-    TextView typeService, priceService, descriptionService, imageService, googlePlusUrlText;
+    TextView typeService, priceService, descriptionService, imageService, googlePlusUrlText,txtMainUsr;
 
-    String name, description, jdescription, jimage, gplusUrl;
+    String name, description, jdescription, jimage, gplusUrl, txtTitle,username,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent Intent = getIntent();
+        username = Intent.getStringExtra("username");
+        password = Intent.getStringExtra("password");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +65,9 @@ public class MainActivity extends AppCompatActivity
         priceService = (TextView) findViewById(R.id.ServicePrice);
         descriptionService = (TextView) findViewById(R.id.ServiceDescription);
         imageService = (TextView) findViewById(R.id.ServiceImage);
+        txtMainUsr= (TextView) findViewById(R.id.txt_MainUser);
+
+        txtMainUsr.setText(username);
 
     }
 
@@ -105,37 +113,86 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.ListServices) {
             url= ip.stIp()+"/service";
             Intent i = new Intent(MainActivity.this, ListServices.class);
+            String[] data = new String[2];
+            data[0] = username;
+            data[1] = password;
+            Bundle bundle = new Bundle();
+            i.putExtra("username", data[0]);
+            i.putExtra("password", data[1]);
+            i.putExtras(bundle);
             startActivity(i);
 
         //2- Autenticação
         } else if (id == R.id.Login) {
             //url= ip.stIp()+"/login";
             Intent i = new Intent(MainActivity.this, Login.class);
+            String[] data = new String[2];
+            data[0] = username;
+            data[1] = password;
+            Bundle bundle = new Bundle();
+            i.putExtra("username", data[0]);
+            i.putExtra("password", data[1]);
+            i.putExtras(bundle);
             startActivity(i);
 
          //3- Listar Veículos
         } else if (id == R.id.ListVehicles) {
             Intent i = new Intent(MainActivity.this, ListVehicles.class);
+            String[] data = new String[2];
+            data[0] = username;
+            data[1] = password;
+            Bundle bundle = new Bundle();
+            i.putExtra("username", data[0]);
+            i.putExtra("password", data[1]);
+            i.putExtras(bundle);
             startActivity(i);
 
         //4 - Ver Agendamentos
         } else if (id == R.id.ListSchedules) {
             Intent i = new Intent(MainActivity.this, ListScheduleService.class);
+            String[] data = new String[2];
+            data[0] = username;
+            data[1] = password;
+            Bundle bundle = new Bundle();
+            i.putExtra("username", data[0]);
+            i.putExtra("password", data[1]);
+            i.putExtras(bundle);
             startActivity(i);
 
         //5 - Agendar Serviços
         } else if (id == R.id.ScheduleService) {
             Intent i = new Intent(MainActivity.this, SetScheduleService.class);
+            String[] data = new String[2];
+            data[0] = username;
+            data[1] = password;
+            Bundle bundle = new Bundle();
+            i.putExtra("username", data[0]);
+            i.putExtra("password", data[1]);
+            i.putExtras(bundle);
             startActivity(i);
 
         //6 - Ver Reparação
         } else if (id == R.id.ListRepairs) {
             Intent i = new Intent(MainActivity.this, ListRepair.class);
+            String[] data = new String[2];
+            data[0] = username;
+            data[1] = password;
+            Bundle bundle = new Bundle();
+            i.putExtra("username", data[0]);
+            i.putExtra("password", data[1]);
+            i.putExtras(bundle);
             startActivity(i);
 
         //7 - Ver Orçamentos
         } else if (id == R.id.ListBudgets) {
             Intent i = new Intent(MainActivity.this, ListBudgets.class);
+            String[] data = new String[2];
+            data[0] = username;
+            data[1] = password;
+            Bundle bundle = new Bundle();
+            i.putExtra("username", data[0]);
+            i.putExtra("password", data[1]);
+            i.putExtras(bundle);
             startActivity(i);
         }
 

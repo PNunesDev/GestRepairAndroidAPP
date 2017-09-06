@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,8 +38,7 @@ public class SetScheduleService extends AppCompatActivity {
     String name;
     ListView list;
     int n=1;
-    String username ="rbarcelos";
-    String password ="123qwe";
+    String username,password;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     ArrayList<String> Service = new ArrayList<String>();
@@ -52,6 +52,11 @@ public class SetScheduleService extends AppCompatActivity {
         setContentView(R.layout.content_schedule__service);
         rq = Volley.newRequestQueue(this);
         rq2 = Volley.newRequestQueue(this);
+
+        Intent Intent = getIntent();
+        username = Intent.getStringExtra("username");
+        password = Intent.getStringExtra("password");
+        Log.i("TAG",username+" - "+password+" TESTE");
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

@@ -40,8 +40,7 @@ public class Schedule_Service extends AppCompatActivity {
     TextView Registration, Service, Date;
     String SRegistration, SService, SDate;
 
-    String username = "rbarcelos";
-    String password = "123qwe";
+    String username,password;
 
     Ip ip = new Ip();
     String url = ip.stIp() + "/schedule/1";
@@ -56,6 +55,11 @@ public class Schedule_Service extends AppCompatActivity {
         Registration = (TextView) findViewById(R.id.txtRegistrationValue);
         Service = (TextView) findViewById(R.id.txt_ServiceValue);
         Date = (TextView) findViewById(R.id.txtDateValue);
+
+        Intent Intent = getIntent();
+        username = Intent.getStringExtra("username");
+        password = Intent.getStringExtra("password");
+        Log.i("TAG",username+" - "+password+" TESTE");
 
         sendjsonrequest();
     }

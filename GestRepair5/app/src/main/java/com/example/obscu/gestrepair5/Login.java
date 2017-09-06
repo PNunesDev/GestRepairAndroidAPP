@@ -66,62 +66,6 @@ public class Login extends AppCompatActivity {
                 username=UserName.getText().toString();
                 password=Password.getText().toString();
 
-
-                /*
-                if(username.equals("") || password.equals("")) {
-                    builder.setTitle("Alguma coisa correu mal");
-                    displayAlert("Introduza um Username e Password válido");
-                }
-                else{
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, login_url, new Response.Listener<String>() {
-
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONArray jsonArray = new JSONArray(response);
-                                JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                String code = jsonObject.getString("code");
-
-                                if(code.equals("login_failed")){
-                                    builder.setTitle("Login Error...");
-                                    displayAlert(jsonObject.getString("message"));
-                                }
-                                else {
-                                    Intent intent = new Intent(Login.this, LoginSucess.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("name", jsonObject.getString("name"));
-                                    bundle.putString("email", jsonObject.getString("email"));
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            Log.d("Response", response);
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                                Toast.makeText(Login.this,"Erro",Toast.LENGTH_LONG).show();
-                                error.printStackTrace();
-                        }
-                    })
-                    {
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String,String> params = new HashMap<String, String>();
-                            params.put("username",username);
-                            params.put("password",password);
-                            return params;
-                        }
-                    };
-                    //MySingleton.getInstance(Login.this).addToRequestque(stringRequest);
-                }*/
-
-
-
                 StringRequest postRequest = new StringRequest(Request.Method.POST, login_url,
                         new Response.Listener<String>()
                         {
@@ -135,11 +79,12 @@ public class Login extends AppCompatActivity {
                                 data[0] = username;
                                 data[1] = password;
                                 Toast.makeText(Login.this,data[0],Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(Login.this, ListRepair.class);
+                                Intent intent = new Intent(Login.this, MainActivity.class);
                                 Bundle bundle = new Bundle();
-                                intent.putExtra("cred", data);
+                                intent.putExtra("username", data[0]);
+                                intent.putExtra("password", data[1]);
                                 intent.putExtras(bundle);
-
+                                startActivity(intent);
                             }
                         },
                         new Response.ErrorListener()

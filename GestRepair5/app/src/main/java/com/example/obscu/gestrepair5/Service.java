@@ -44,6 +44,8 @@ public class Service extends Activity {
         descriptionService = (TextView) findViewById(R.id.ServiceDescription);
         imageService = (TextView) findViewById(R.id.ServiceImage);
 
+
+
         sendjsonrequest();
     }
 

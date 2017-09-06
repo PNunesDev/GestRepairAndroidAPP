@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,8 +37,7 @@ public class ListRepair extends AppCompatActivity {
     RequestQueue rq;
     ListView list;
     int n=1;
-    String username ="rbarcelos";
-    String password ="123qwe";
+    String username, password;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
@@ -48,6 +48,11 @@ public class ListRepair extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_repair);
         rq = Volley.newRequestQueue(this);
+
+        Intent Intent = getIntent();
+        username = Intent.getStringExtra("username");
+        password = Intent.getStringExtra("password");
+        Log.i("TAG",username+" - "+password+" TESTE");
 
 
 
@@ -73,8 +78,14 @@ public class ListRepair extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent intent = new Intent(ListRepair.this, Repair.class);
+                            String[] data = new String[2];
+                            data[0] = username;
+                            data[1] = password;
+                            Bundle bundle = new Bundle();
+                            intent.putExtra("username", data[0]);
+                            intent.putExtra("password", data[1]);
                             intent.putExtra("position", position);
-
+                            intent.putExtras(bundle);
                             startActivity(intent);
                         }
                     });

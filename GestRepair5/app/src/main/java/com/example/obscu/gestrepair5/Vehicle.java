@@ -34,8 +34,7 @@ public class Vehicle extends AppCompatActivity {
      TextView Registration, CC, Km, Fuel, RegisterDate, FrontTire, BackTire,  txtRegistration;
     String SRegistration, SCC, SKm, SFuel, SRegisterDate, SFrontTire, SBackTire;
 
-    String username ="rbarcelos";
-    String password ="123qwe";
+    String username, password;
 
     Ip ip = new Ip();
     String url= ip.stIp()+"/vehicle/1/user";
@@ -55,6 +54,11 @@ public class Vehicle extends AppCompatActivity {
         RegisterDate = (TextView) findViewById(R.id.txtDateRegisterValue);
         FrontTire = (TextView) findViewById(R.id.txtFrontTireValue);
         BackTire = (TextView) findViewById(R.id.txtBackTireValue);
+
+        Intent Intent = getIntent();
+        username = Intent.getStringExtra("username");
+        password = Intent.getStringExtra("password");
+        Log.i("TAG",username+" - "+password+" TESTE");
 
         sendjsonrequest();
     }

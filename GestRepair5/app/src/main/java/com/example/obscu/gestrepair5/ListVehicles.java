@@ -36,8 +36,7 @@ public class ListVehicles extends AppCompatActivity {
     RequestQueue rq;
     ListView list;
     int n=1;
-    String username ="rbarcelos";
-    String password ="123qwe";
+    String username,password;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
@@ -47,9 +46,10 @@ public class ListVehicles extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_vehicles);
-        ListView list = (ListView) findViewById(R.id.lst_Vehicles);
-        final TextView barcel = (TextView) findViewById(R.id.textView);
         rq = Volley.newRequestQueue(this);
+        Intent Intent = getIntent();
+        username = Intent.getStringExtra("username");
+        password = Intent.getStringExtra("password");
 
 
 
@@ -76,8 +76,15 @@ public class ListVehicles extends AppCompatActivity {
                                                     @Override
                                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                                         Intent intent = new Intent(ListVehicles.this, Vehicle.class);
+                                                        String[] data = new String[2];
+                                                        data[0] = username;
+                                                        data[1] = password;
+                                                        Bundle bundle = new Bundle();
+                                                        intent.putExtra("username", data[0]);
+                                                        intent.putExtra("password", data[1]);
+                                                        intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
                                                         intent.putExtra("position", position);
-
+                                                        intent.putExtras(bundle);
                                                         startActivity(intent);
                                                     }
                                                 });

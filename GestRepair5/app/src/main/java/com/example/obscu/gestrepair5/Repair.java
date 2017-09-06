@@ -35,8 +35,7 @@ public class Repair extends AppCompatActivity {
     String SRegistration, SPrice, SDiagnosis, SRepairData, SStatus, SEntry, SOut;
 
 
-    String username ="rbarcelos";
-    String password ="123qwe";
+    String username,password;
 
     Ip ip = new Ip();
     String url= ip.stIp()+"/repair/user/1";
@@ -54,6 +53,11 @@ public class Repair extends AppCompatActivity {
         txtStatus = (TextView) findViewById(R.id.txt_Repair_Status_Value);
         txtEntry = (TextView) findViewById(R.id.txt_Repair_Entry_Value);
         txtOut = (TextView) findViewById(R.id.txt_Repair_Out_Value);
+
+        Intent Intent = getIntent();
+        username = Intent.getStringExtra("username");
+        password = Intent.getStringExtra("password");
+        Log.i("TAG",username+" - "+password+" TESTE");
 
         sendjsonrequest();
     }
