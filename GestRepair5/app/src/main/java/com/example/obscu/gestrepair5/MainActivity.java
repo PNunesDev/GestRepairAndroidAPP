@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     Ip ip = new Ip();
     String url = ip.stIp()+"/login";
     TextView typeService, priceService, descriptionService, imageService, googlePlusUrlText,txtMainUsr;
+    NavigationView navigationView;
 
     String name, description, jdescription, jimage, gplusUrl, txtTitle,username,password,response, iduser;
 
@@ -97,6 +98,24 @@ public class MainActivity extends AppCompatActivity
         txtMainUsr = (TextView) findViewById(R.id.txt_MainUser);
 
         txtMainUsr.setText(username);
+        if (username==null) {
+            navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.ListVehicles).setVisible(false);
+            nav_Menu.findItem(R.id.ListSchedules).setVisible(false);
+            nav_Menu.findItem(R.id.ScheduleService).setVisible(false);
+            nav_Menu.findItem(R.id.ListRepairs).setVisible(false);
+            nav_Menu.findItem(R.id.ListBudgets).setVisible(false);
+        }
+        else{
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.ListVehicles).setVisible(true);
+            nav_Menu.findItem(R.id.ListSchedules).setVisible(true);
+            nav_Menu.findItem(R.id.ScheduleService).setVisible(true);
+            nav_Menu.findItem(R.id.ListRepairs).setVisible(true);
+            nav_Menu.findItem(R.id.ListBudgets).setVisible(true);
+            }
+
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -186,17 +205,22 @@ public class MainActivity extends AppCompatActivity
             // Daqui para baixo todas as opções precisam de autenticação
          //3- Listar Veículos
         } else if (id == R.id.ListVehicles) {
-            Intent i = new Intent(MainActivity.this, ListVehicles.class);
-            String[] data = new String[3];
-            data[0] = username;
-            data[1] = password;
-            data[2] = iduser;
-            Bundle bundle = new Bundle();
-            i.putExtra("username", data[0]);
-            i.putExtra("password", data[1]);
-            i.putExtra("iduser", data[2]);
-            i.putExtras(bundle);
-            startActivity(i);
+
+            if (txtMainUsr==null){
+            }
+            else {
+                Intent i = new Intent(MainActivity.this, ListVehicles.class);
+                String[] data = new String[3];
+                data[0] = username;
+                data[1] = password;
+                data[2] = iduser;
+                Bundle bundle = new Bundle();
+                i.putExtra("username", data[0]);
+                i.putExtra("password", data[1]);
+                i.putExtra("iduser", data[2]);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
 
         //4 - Ver Agendamentos
         } else if (id == R.id.ListSchedules) {
@@ -255,10 +279,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         }
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 }
