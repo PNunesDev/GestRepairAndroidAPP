@@ -37,11 +37,10 @@ public class ListRepair extends AppCompatActivity {
     RequestQueue rq;
     ListView list;
     int n=1;
-    String username, password;
+    String username, password, iduser;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
-    String url = ip.stIp() + "/repair/user/1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +51,8 @@ public class ListRepair extends AppCompatActivity {
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
-        Log.i("TAG",username+" - "+password+" TESTE");
-
-
-
+        iduser = Intent.getStringExtra("iduser");
+        String url = ip.stIp() + "/repair/user/"+iduser;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -78,12 +75,14 @@ public class ListRepair extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent intent = new Intent(ListRepair.this, Repair.class);
-                            String[] data = new String[2];
+                            String[] data = new String[3];
                             data[0] = username;
                             data[1] = password;
+                            data[2] = iduser;
                             Bundle bundle = new Bundle();
                             intent.putExtra("username", data[0]);
                             intent.putExtra("password", data[1]);
+                            intent.putExtra("iduser", data[2]);
                             intent.putExtra("position", position);
                             intent.putExtras(bundle);
                             startActivity(intent);

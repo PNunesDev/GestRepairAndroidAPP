@@ -201,48 +201,56 @@ public class MainActivity extends AppCompatActivity
         //4 - Ver Agendamentos
         } else if (id == R.id.ListSchedules) {
             Intent i = new Intent(MainActivity.this, ListScheduleService.class);
-            String[] data = new String[2];
+            String[] data = new String[3];
             data[0] = username;
             data[1] = password;
+            data[2] = iduser;
             Bundle bundle = new Bundle();
             i.putExtra("username", data[0]);
             i.putExtra("password", data[1]);
+            i.putExtra("iduser", data[2]);
             i.putExtras(bundle);
             startActivity(i);
 
         //5 - Agendar Serviços
         } else if (id == R.id.ScheduleService) {
             Intent i = new Intent(MainActivity.this, SetScheduleService.class);
-            String[] data = new String[2];
+            String[] data = new String[3];
             data[0] = username;
             data[1] = password;
+            data[2] = iduser;
             Bundle bundle = new Bundle();
             i.putExtra("username", data[0]);
             i.putExtra("password", data[1]);
+            i.putExtra("iduser", data[2]);
             i.putExtras(bundle);
             startActivity(i);
 
         //6 - Ver Reparação
         } else if (id == R.id.ListRepairs) {
             Intent i = new Intent(MainActivity.this, ListRepair.class);
-            String[] data = new String[2];
+            String[] data = new String[3];
             data[0] = username;
             data[1] = password;
+            data[2] = iduser;
             Bundle bundle = new Bundle();
             i.putExtra("username", data[0]);
             i.putExtra("password", data[1]);
+            i.putExtra("iduser", data[2]);
             i.putExtras(bundle);
             startActivity(i);
 
         //7 - Ver Orçamentos
         } else if (id == R.id.ListBudgets) {
             Intent i = new Intent(MainActivity.this, ListBudgets.class);
-            String[] data = new String[2];
+            String[] data = new String[3];
             data[0] = username;
             data[1] = password;
+            data[2] = iduser;
             Bundle bundle = new Bundle();
             i.putExtra("username", data[0]);
             i.putExtra("password", data[1]);
+            i.putExtra("iduser", data[2]);
             i.putExtras(bundle);
             startActivity(i);
         }

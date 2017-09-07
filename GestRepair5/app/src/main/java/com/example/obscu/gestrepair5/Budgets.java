@@ -36,20 +36,14 @@ public class Budgets extends AppCompatActivity {
 
     String SRegistration, SState, SPrice, SProcess, SRepair;
 
-   // String username="rbarcelos";
-    //String password="123qwe";
-    String username, password;
-
-
+    String username, password, iduser;
     Ip ip = new Ip();
-    String url= ip.stIp()+"/budget/1";
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budgets);
         rq = Volley.newRequestQueue(this);
-
 
         txtRegistration = (TextView) findViewById(R.id.txt_RegistrationValue);
         txtState = (TextView) findViewById(R.id.txt_StatValue);
@@ -60,12 +54,13 @@ public class Budgets extends AppCompatActivity {
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
-        Log.i("TAG",username+" - "+password+" TESTE");
+        iduser = Intent.getStringExtra("iduser");
+        String url= ip.stIp()+"/budget/"+iduser;
 
-        sendjsonrequest();
+        sendjsonrequest(url);
     }
 
-    public void sendjsonrequest(){
+    public void sendjsonrequest(String url){
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

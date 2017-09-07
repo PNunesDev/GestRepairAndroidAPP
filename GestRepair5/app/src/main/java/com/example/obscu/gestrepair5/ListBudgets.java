@@ -35,15 +35,10 @@ public class ListBudgets extends AppCompatActivity {
 
     RequestQueue rq;
     ListView list;
-    int n=1;
-    String username, password;
+    String username, password, iduser;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
-    String url = ip.stIp() + "/budget/1";
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +49,10 @@ public class ListBudgets extends AppCompatActivity {
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
-        //Log.i("TAG",username+" - "+password+" TESTE");
+        iduser = Intent.getStringExtra("iduser");
+        String url = ip.stIp() + "/budget/"+iduser;
+        Log.i("TAG", url+" IP");
+
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -80,12 +78,14 @@ public class ListBudgets extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent intent = new Intent(ListBudgets.this, Budgets.class);
-                            String[] data = new String[2];
+                            String[] data = new String[3];
                             data[0] = username;
                             data[1] = password;
+                            data[2] = iduser;
                             Bundle bundle = new Bundle();
                             intent.putExtra("username", data[0]);
                             intent.putExtra("password", data[1]);
+                            intent.putExtra("iduser", data[2]);
                             intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
                             intent.putExtras(bundle);
                             startActivity(intent);

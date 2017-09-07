@@ -35,12 +35,11 @@ public class ListScheduleService extends AppCompatActivity {
 
     RequestQueue rq;
     ListView list;
-    int n = 1;
-    String username,password;
+    String username,password,iduser;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
-    String url = ip.stIp() + "/schedule/1";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,8 @@ public class ListScheduleService extends AppCompatActivity {
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
+        iduser = Intent.getStringExtra("iduser");
+        String url = ip.stIp() + "/schedule/"+iduser;
         rq = Volley.newRequestQueue(this);
 
 
@@ -73,12 +74,14 @@ public class ListScheduleService extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent intent = new Intent(ListScheduleService.this, Schedule_Service.class);
-                            String[] data = new String[2];
+                            String[] data = new String[3];
                             data[0] = username;
                             data[1] = password;
+                            data[2] = iduser;
                             Bundle bundle = new Bundle();
                             intent.putExtra("username", data[0]);
                             intent.putExtra("password", data[1]);
+                            intent.putExtra("iduser", data[2]);
                             intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
                             intent.putExtra("position", position);
                             intent.putExtras(bundle);

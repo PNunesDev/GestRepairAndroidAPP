@@ -35,11 +35,9 @@ public class Repair extends AppCompatActivity {
     String SRegistration, SPrice, SDiagnosis, SRepairData, SStatus, SEntry, SOut;
 
 
-    String username,password;
+    String username,password, iduser;
 
     Ip ip = new Ip();
-    String url= ip.stIp()+"/repair/user/1";
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +55,13 @@ public class Repair extends AppCompatActivity {
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
-        Log.i("TAG",username+" - "+password+" TESTE");
+        iduser = Intent.getStringExtra("iduser");
+        String url= ip.stIp()+"/repair/user/"+iduser;
 
-        sendjsonrequest();
+        sendjsonrequest(url);
     }
 
-    public void sendjsonrequest(){
+    public void sendjsonrequest(String url){
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

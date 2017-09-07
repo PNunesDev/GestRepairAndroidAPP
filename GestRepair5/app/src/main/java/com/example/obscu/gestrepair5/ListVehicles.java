@@ -53,8 +53,8 @@ public class ListVehicles extends AppCompatActivity {
         iduser = Intent.getStringExtra("iduser");
 
         String url = ip.stIp() + "/vehicle/"+iduser+"/user";
-        Log.i("TAG", url+" IP");
-        
+        Log.i("TAG", iduser+" IP");
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
             @Override
@@ -77,12 +77,15 @@ public class ListVehicles extends AppCompatActivity {
                                                     @Override
                                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                                         Intent intent = new Intent(ListVehicles.this, Vehicle.class);
-                                                        String[] data = new String[2];
+                                                        Log.i("TAG", iduser+" IP");
+                                                        String[] data = new String[3];
                                                         data[0] = username;
                                                         data[1] = password;
+                                                        data[2] = iduser;
                                                         Bundle bundle = new Bundle();
                                                         intent.putExtra("username", data[0]);
                                                         intent.putExtra("password", data[1]);
+                                                        intent.putExtra("iduser", data[2]);
                                                         intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
                                                         intent.putExtra("position", position);
                                                         intent.putExtras(bundle);

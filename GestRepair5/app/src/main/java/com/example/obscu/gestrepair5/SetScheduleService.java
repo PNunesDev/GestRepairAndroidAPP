@@ -37,13 +37,11 @@ public class SetScheduleService extends AppCompatActivity {
     RequestQueue rq,rq2;
     String name;
     ListView list;
-    int n=1;
-    String username,password;
+    String username,password,iduser;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     ArrayList<String> Service = new ArrayList<String>();
     Ip ip = new Ip();
-    String url = ip.stIp() + "/vehicle/1/user";
     String url2 = ip.stIp() + "/service";
 
     @Override
@@ -56,7 +54,8 @@ public class SetScheduleService extends AppCompatActivity {
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
-        Log.i("TAG",username+" - "+password+" TESTE");
+        iduser = Intent.getStringExtra("iduser");
+        String url = ip.stIp() + "/vehicle/"+iduser+"/user";
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
