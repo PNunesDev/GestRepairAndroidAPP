@@ -30,14 +30,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
     TextView textview;
+    RequestQueue rq;
     Button login_button;
     EditText UserName,Password;
-    String username, password;
+    String username, password, ID;
     Ip ip = new Ip();
     String login_url = ip.stIp()+"/login";
     AlertDialog.Builder builder;
@@ -50,6 +52,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
+        rq = Volley.newRequestQueue(this);
        /* textview = (TextView)findViewById(R.id.reg_txt);
         textview.setOnClickListener((v) {
                 startActivity(new Intent(Login.this, Register.class));
@@ -72,17 +75,18 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 // response
-                                Log.d("Response", response);
 
-                                //Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
-                                String[] data = new String[2];
+                                Log.d("Response", response);
+                                String[] data = new String[3];
                                 data[0] = username;
                                 data[1] = password;
-                                Toast.makeText(Login.this,data[0],Toast.LENGTH_LONG).show();
+                                data[2] = response;
+
                                 Intent intent = new Intent(Login.this, MainActivity.class);
                                 Bundle bundle = new Bundle();
                                 intent.putExtra("username", data[0]);
                                 intent.putExtra("password", data[1]);
+                                intent.putExtra("response", data[2]);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }
@@ -117,16 +121,19 @@ public class Login extends AppCompatActivity {
                         } catch (Exception e) {
 
                         }
+
                         return super.getHeaders();
                     }
 
                 };
+
 
                 queue.add(postRequest);
 
 
             }
         });
+
 
     }
     public void displayAlert(String message){

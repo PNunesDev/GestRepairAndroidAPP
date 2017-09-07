@@ -1,9 +1,12 @@
 package com.example.obscu.gestrepair5;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,21 +16,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     RequestQueue rq;
     Ip ip = new Ip();
-    String url="";
+    String url = ip.stIp()+"/login";
     TextView typeService, priceService, descriptionService, imageService, googlePlusUrlText,txtMainUsr;
 
-    String name, description, jdescription, jimage, gplusUrl, txtTitle,username,password;
+    String name, description, jdescription, jimage, gplusUrl, txtTitle,username,password,response, iduser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +57,17 @@ public class MainActivity extends AppCompatActivity
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
+        response = Intent.getStringExtra("response");
+        if(response!=null) {
+            iduser = response.substring(response.indexOf("idUser") + 2);
+            iduser=iduser.substring(5,10);
+            iduser=iduser.replaceAll("[^\\.0123456789]","");
+        }
+
+       /* if(response!=null)
+        response.substring(response.indexOf("idUser:") + 1 , response.length());*/
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,9 +94,42 @@ public class MainActivity extends AppCompatActivity
         priceService = (TextView) findViewById(R.id.ServicePrice);
         descriptionService = (TextView) findViewById(R.id.ServiceDescription);
         imageService = (TextView) findViewById(R.id.ServiceImage);
-        txtMainUsr= (TextView) findViewById(R.id.txt_MainUser);
+        txtMainUsr = (TextView) findViewById(R.id.txt_MainUser);
 
         txtMainUsr.setText(username);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("TAG","Lhurz");
+                try {
+                    JSONArray data = (JSONArray) response.get("data");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Context context = getApplicationContext();
+                CharSequence text = "Não foi possivel ligar à internet";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        }){
+            @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            String credentials = username + ":" + password;
+            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put("Authorization", "Basic " + base64EncodedCredentials);
+            return headers;
+        }
+        };
+        rq.add(jsonObjectRequest);
 
     }
 
@@ -113,37 +175,26 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.ListServices) {
             url= ip.stIp()+"/service";
             Intent i = new Intent(MainActivity.this, ListServices.class);
-            String[] data = new String[2];
-            data[0] = username;
-            data[1] = password;
-            Bundle bundle = new Bundle();
-            i.putExtra("username", data[0]);
-            i.putExtra("password", data[1]);
-            i.putExtras(bundle);
             startActivity(i);
 
         //2- Autenticação
         } else if (id == R.id.Login) {
             //url= ip.stIp()+"/login";
             Intent i = new Intent(MainActivity.this, Login.class);
-            String[] data = new String[2];
-            data[0] = username;
-            data[1] = password;
-            Bundle bundle = new Bundle();
-            i.putExtra("username", data[0]);
-            i.putExtra("password", data[1]);
-            i.putExtras(bundle);
             startActivity(i);
 
+            // Daqui para baixo todas as opções precisam de autenticação
          //3- Listar Veículos
         } else if (id == R.id.ListVehicles) {
             Intent i = new Intent(MainActivity.this, ListVehicles.class);
-            String[] data = new String[2];
+            String[] data = new String[3];
             data[0] = username;
             data[1] = password;
+            data[2] = iduser;
             Bundle bundle = new Bundle();
             i.putExtra("username", data[0]);
             i.putExtra("password", data[1]);
+            i.putExtra("iduser", data[2]);
             i.putExtras(bundle);
             startActivity(i);
 

@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,12 +36,10 @@ public class ListVehicles extends AppCompatActivity {
 
     RequestQueue rq;
     ListView list;
-    int n=1;
-    String username,password;
-
+    String username,password, iduser;
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
-    String url = ip.stIp() + "/vehicle/"+n+"/user";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +47,14 @@ public class ListVehicles extends AppCompatActivity {
         setContentView(R.layout.activity_list_vehicles);
         rq = Volley.newRequestQueue(this);
         Intent Intent = getIntent();
+
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
+        iduser = Intent.getStringExtra("iduser");
 
-
-
-
+        String url = ip.stIp() + "/vehicle/"+iduser+"/user";
+        Log.i("TAG", url+" IP");
+        
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
             @Override
