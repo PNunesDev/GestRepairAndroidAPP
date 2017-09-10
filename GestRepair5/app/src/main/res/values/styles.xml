@@ -17,4 +17,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="editText_Style">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/edittext_background</item>
+    </style>
+
+    <style name="buton_style">
+        <item name="android:background">@drawable/button_style</item>
+    </style>
+
 </resources>

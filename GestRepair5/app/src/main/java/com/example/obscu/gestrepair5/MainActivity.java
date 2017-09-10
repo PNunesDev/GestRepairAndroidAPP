@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity
         }
         else{
             Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.Login).setVisible(false);
             nav_Menu.findItem(R.id.ListVehicles).setVisible(true);
             nav_Menu.findItem(R.id.ListSchedules).setVisible(true);
             nav_Menu.findItem(R.id.ScheduleService).setVisible(true);
