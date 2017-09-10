@@ -63,8 +63,8 @@ public class ListRepair extends AppCompatActivity {
                     String[][] name = new String[data.length()][3];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject datas = (JSONObject) data.get(i);
-                        name[i][0] = datas.getString("registration");
-                        name[i][1] = datas.getString("nameState");
+                        name[i][0] = datas.getString("vehicle");
+                        name[i][1] = datas.getString("state");
                         Vehicles.add("Reparação Nº "+name[i][0]+" - "+name[i][1]);
                     }
 

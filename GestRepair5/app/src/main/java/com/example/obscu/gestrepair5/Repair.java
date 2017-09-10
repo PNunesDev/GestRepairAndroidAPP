@@ -76,11 +76,11 @@ public class Repair extends AppCompatActivity {
 
                     //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
                     JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
-                    SRegistration = jsonObject.getString("registration");
+                    SRegistration = jsonObject.getString("vehicle");
                     SPrice = jsonObject.getString("price");
                     SDiagnosis = jsonObject.getString("description");
                     SRepairData = jsonObject.getString("information");
-                    SStatus = jsonObject.getString("nameState");
+                    SStatus = jsonObject.getString("state");
                     SEntry = jsonObject.getString("startDate");
                     SOut = jsonObject.getString("finishDate");
 
