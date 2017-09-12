@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,15 +35,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    RequestQueue rq;
+    RequestQueue rq, rq2, rq3;
     Ip ip = new Ip();
     String url = ip.stIp()+"/login";
+    FrameLayout FLVehicles, FLSchedules;
+    ArrayList<String> Vehicles = new ArrayList<String>();
+    ArrayList<String> Schedules = new ArrayList<String>();
+
     TextView typeService, priceService, descriptionService, imageService, googlePlusUrlText,txtMainUsr;
     NavigationView navigationView;
 
@@ -59,11 +65,14 @@ public class MainActivity extends AppCompatActivity
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
         response = Intent.getStringExtra("response");
+
         if(response!=null) {
             iduser = response.substring(response.indexOf("idUser") + 2);
             iduser=iduser.substring(5,10);
             iduser=iduser.replaceAll("[^\\.0123456789]","");
         }
+        String url2 = ip.stIp() + "/vehicle/"+iduser+"/user";
+        String url3 = ip.stIp() + "/schedule/"+iduser;
 
        /* if(response!=null)
         response.substring(response.indexOf("idUser:") + 1 , response.length());*/
@@ -90,12 +99,17 @@ public class MainActivity extends AppCompatActivity
 
         // Custom
         rq = Volley.newRequestQueue(this);
+        rq2 = Volley.newRequestQueue(this);
+        rq3 = Volley.newRequestQueue(this);
 
         typeService = (TextView) findViewById(R.id.ServiceType);
         priceService = (TextView) findViewById(R.id.ServicePrice);
         descriptionService = (TextView) findViewById(R.id.ServiceDescription);
         imageService = (TextView) findViewById(R.id.ServiceImage);
         txtMainUsr = (TextView) findViewById(R.id.txt_MainUser);
+        FLVehicles = (FrameLayout) findViewById(R.id.frameLayout);
+        FLSchedules = (FrameLayout) findViewById(R.id.frameLayout2);
+
 
         txtMainUsr.setText(username);
         if (username==null) {
@@ -106,6 +120,8 @@ public class MainActivity extends AppCompatActivity
             nav_Menu.findItem(R.id.ScheduleService).setVisible(false);
             nav_Menu.findItem(R.id.ListRepairs).setVisible(false);
             nav_Menu.findItem(R.id.ListBudgets).setVisible(false);
+            FLVehicles.setVisibility(View.INVISIBLE);
+            FLSchedules.setVisibility(View.INVISIBLE);
         }
         else{
             Menu nav_Menu = navigationView.getMenu();
@@ -118,7 +134,7 @@ public class MainActivity extends AppCompatActivity
             }
 
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+       /* JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -139,7 +155,125 @@ public class MainActivity extends AppCompatActivity
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
             }
-        }){
+        });*/
+        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET, url2, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray data = (JSONArray) response.get("data");
+                    String[][] name = new String[data.length()][3];
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject datas = (JSONObject) data.get(i);
+                        name[i][0] = datas.getString("nameBrand");
+                        name[i][1] = datas.getString("nameModel");
+                        name[i][2] = datas.getString("registration");
+                        Vehicles.add(name[i][0]+" "+name[i][1]+"\n"+name[i][2]);
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_list_vehicles_main, Vehicles);
+                    final ListView list = (ListView) findViewById(R.id.lst_Main_Vehicles);
+
+                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(MainActivity.this, Vehicle.class);
+                            Log.i("TAG", iduser+" IP");
+                            String[] data = new String[3];
+                            data[0] = username;
+                            data[1] = password;
+                            data[2] = iduser;
+                            Bundle bundle = new Bundle();
+                            intent.putExtra("username", data[0]);
+                            intent.putExtra("password", data[1]);
+                            intent.putExtra("iduser", data[2]);
+                            intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
+                            intent.putExtra("position", position);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+                    });
+                    list.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Context context = getApplicationContext();
+                CharSequence text = "Não foi possivel ligar à internet";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }})
+        {
+        @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            String credentials = username + ":" + password;
+            String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put("Authorization", "Basic " + base64EncodedCredentials);
+            return headers;
+        }};
+
+        JsonObjectRequest jsonObjectRequest3 = new JsonObjectRequest(Request.Method.GET, url3, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray data = (JSONArray) response.get("data");
+                    String[][] name = new String[data.length()][3];
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject datas = (JSONObject) data.get(i);
+                        name[i][0] = datas.getString("idSchedule");
+                        name[i][1] = datas.getString("vehicle");
+                        Schedules.add("Marcação Nº "+name[i][0] + " - " + name[i][1]);
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_list_vehicles_main, Schedules);
+                    final ListView list = (ListView) findViewById(R.id.lst_Main_Schedules);
+
+                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(MainActivity.this, Schedule_Service.class);
+                            String[] data = new String[3];
+                            data[0] = username;
+                            data[1] = password;
+                            data[2] = iduser;
+                            Bundle bundle = new Bundle();
+                            intent.putExtra("username", data[0]);
+                            intent.putExtra("password", data[1]);
+                            intent.putExtra("iduser", data[2]);
+                            intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
+                            intent.putExtra("position", position);
+                            intent.putExtras(bundle);
+
+                            startActivity(intent);
+                        }
+                    });
+
+                    list.setAdapter(adapter);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Context context = getApplicationContext();
+                CharSequence text = "Não foi possivel ligar à internet";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }})
+        {
             @Override
         public Map<String, String> getHeaders() throws AuthFailureError {
             String credentials = username + ":" + password;
@@ -149,7 +283,9 @@ public class MainActivity extends AppCompatActivity
             return headers;
         }
         };
-        rq.add(jsonObjectRequest);
+        //rq.add(jsonObjectRequest);
+        rq2.add(jsonObjectRequest2);
+            rq3.add(jsonObjectRequest3);
 
     }
 

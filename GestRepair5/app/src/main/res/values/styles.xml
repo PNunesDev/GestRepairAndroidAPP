@@ -22,6 +22,11 @@
         <item name="android:background">@drawable/edittext_background</item>
     </style>
 
+    <style name="editFrame_Layout">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/editframelayout</item>
+    </style>
+
     <style name="buton_style">
         <item name="android:background">@drawable/button_style</item>
     </style>

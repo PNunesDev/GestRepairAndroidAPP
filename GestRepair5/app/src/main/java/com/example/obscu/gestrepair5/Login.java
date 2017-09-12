@@ -3,6 +3,7 @@ package com.example.obscu.gestrepair5;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
@@ -19,9 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -35,7 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
-    TextView textview;
+    TextView textview, NotRegistered, OFFLineMode;
     RequestQueue rq;
     Button login_button;
     EditText UserName,Password;
@@ -61,7 +67,32 @@ public class Login extends AppCompatActivity {
         login_button = (Button)findViewById(R.id.bn_login);
         UserName = (EditText) findViewById(R.id.login_name);
         Password = (EditText) findViewById(R.id.login_password);
+        NotRegistered = (TextView) findViewById(R.id.txt_NRegistered);
+        OFFLineMode = (TextView) findViewById(R.id.txt_offlineMode);
+
         queue = Volley.newRequestQueue(this);
+
+        OFFLineMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                String[] data = new String[1];
+                data[0] = username;
+                intent.putExtra("username", data[0]);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        NotRegistered.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("http://ec2-52-56-143-158.eu-west-2.compute.amazonaws.com/user/create"); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,9 +126,19 @@ public class Login extends AppCompatActivity {
                         {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                // error
-                                //Toast.makeText(Login.this,"Erro",Toast.LENGTH_LONG).show();
-                                error.printStackTrace();
+                                    if( error instanceof AuthFailureError) {
+                                        Context context = getApplicationContext();
+                                        CharSequence text = "Password errada!";
+                                        int duration = Toast.LENGTH_LONG;
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
+                                    } else if( error instanceof TimeoutError) {
+                                        Context context = getApplicationContext();
+                                        CharSequence text = "Não foi possivel efetuar a ligação ao servidor, por favor tente mais tarde";
+                                        int duration = Toast.LENGTH_LONG;
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
+                                    }
                             }
                         }
                 ) {
