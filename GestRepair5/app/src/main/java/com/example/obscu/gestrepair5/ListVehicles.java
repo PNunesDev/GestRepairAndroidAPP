@@ -74,24 +74,24 @@ public class ListVehicles extends AppCompatActivity {
                     final ListView list = (ListView) findViewById(R.id.lst_Vehicles);
 
                     list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                                    @Override
-                                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                                        Intent intent = new Intent(ListVehicles.this, Vehicle.class);
-                                                        Log.i("TAG", iduser+" IP");
-                                                        String[] data = new String[3];
-                                                        data[0] = username;
-                                                        data[1] = password;
-                                                        data[2] = iduser;
-                                                        Bundle bundle = new Bundle();
-                                                        intent.putExtra("username", data[0]);
-                                                        intent.putExtra("password", data[1]);
-                                                        intent.putExtra("iduser", data[2]);
-                                                        intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
-                                                        intent.putExtra("position", position);
-                                                        intent.putExtras(bundle);
-                                                        startActivity(intent);
-                                                    }
-                                                });
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(ListVehicles.this, Vehicle.class);
+                            Log.i("TAG", iduser+" IP");
+                            String[] data = new String[3];
+                            data[0] = username;
+                            data[1] = password;
+                            data[2] = iduser;
+                            Bundle bundle = new Bundle();
+                            intent.putExtra("username", data[0]);
+                            intent.putExtra("password", data[1]);
+                            intent.putExtra("iduser", data[2]);
+                            intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
+                            intent.putExtra("position", position);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+                    });
                     list.setAdapter(adapter);
 
                 } catch (JSONException e) {

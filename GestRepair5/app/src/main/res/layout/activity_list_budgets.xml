@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.example.obscu.gestrepair5.ListBudgets">
 
 
-    <android.support.v7.widget.Toolbar
+  <!--  <android.support.v7.widget.Toolbar
         android:id="@+id/appBarLayout3"
         android:layout_width="397dp"
         android:layout_height="55dp"
@@ -42,18 +43,34 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintVertical_bias="1.0"
         android:layout_marginTop="8dp"
-        android:id="@+id/include3" />
+        android:id="@+id/include3" /> -->
 
     <ListView
         android:id="@+id/lst_budget"
-        android:layout_width="370dp"
-        android:layout_height="374dp"
+        android:layout_width="300dp"
+        android:layout_height="416dp"
+        android:background="@color/white"
         android:layout_marginBottom="51dp"
-        android:layout_marginLeft="7dp"
+        android:layout_marginLeft="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include3"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginTop="8dp"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+  <TextView
+      android:id="@+id/textView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Lista de Orçamentos"
+      android:textSize="30sp"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="25dp"
+      android:layout_marginRight="8dp"
+      app:layout_constraintRight_toRightOf="parent"
+      android:layout_marginLeft="8dp"
+      app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

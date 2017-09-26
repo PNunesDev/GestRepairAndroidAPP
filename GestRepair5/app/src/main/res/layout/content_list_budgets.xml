@@ -17,6 +17,7 @@
         android:layout_marginTop="30dp"
         android:text="Histórico de Orçamentos"
         android:textSize="30sp"
+        android:textColor="@color/white"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -2,6 +2,7 @@ package com.example.obscu.gestrepair5;
 
 import android.util.Log;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,9 +15,21 @@ import java.util.logging.Logger;
 
 public class DateTime {
     public String DateTime(String DateTime) {
-        String pattern = "yyyy-MM-dd HH:mm:ss";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String Date = simpleDateFormat.format(new Date());
-        return Date;
+        Log.d("TAG", DateTime + " Entrance TestDatetime");
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try {
+            String inputText = DateTime;
+            Date date = inputFormat.parse(inputText);
+            String outputText = outputFormat.format(date);
+            return outputText;
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+            Log.d("TAG"," ERRO! TestDatetime");
+            return null;
+        }
+
     }
 }

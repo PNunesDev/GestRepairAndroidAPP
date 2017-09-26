@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
         typeService = (TextView) findViewById(R.id.ServiceType);
         priceService = (TextView) findViewById(R.id.ServicePrice);
         descriptionService = (TextView) findViewById(R.id.ServiceDescription);
-        imageService = (TextView) findViewById(R.id.ServiceImage);
+       // imageService = (TextView) findViewById(R.id.ServiceImage);
         txtMainUsr = (TextView) findViewById(R.id.txt_MainUser);
         FLVehicles = (FrameLayout) findViewById(R.id.frameLayout);
         FLSchedules = (FrameLayout) findViewById(R.id.frameLayout2);

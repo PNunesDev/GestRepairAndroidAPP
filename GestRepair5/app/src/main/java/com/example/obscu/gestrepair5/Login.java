@@ -107,7 +107,6 @@ public class Login extends AppCompatActivity {
                             public void onResponse(String response) {
                                 // response
 
-                                Log.d("Response", response);
                                 String[] data = new String[3];
                                 data[0] = username;
                                 data[1] = password;
@@ -128,13 +127,13 @@ public class Login extends AppCompatActivity {
                             public void onErrorResponse(VolleyError error) {
                                     if( error instanceof AuthFailureError) {
                                         Context context = getApplicationContext();
-                                        CharSequence text = "Password errada!";
+                                        CharSequence text = "O seu nome de utilizador ou palavra-passe está incorreta.";
                                         int duration = Toast.LENGTH_LONG;
                                         Toast toast = Toast.makeText(context, text, duration);
                                         toast.show();
                                     } else if( error instanceof TimeoutError) {
                                         Context context = getApplicationContext();
-                                        CharSequence text = "Não foi possivel efetuar a ligação ao servidor, por favor tente mais tarde";
+                                        CharSequence text = "Não existe ligação de rede. Certifiquese de que está ligado a uma rede Wi-Fi ou móvel e tente novamente";
                                         int duration = Toast.LENGTH_LONG;
                                         Toast toast = Toast.makeText(context, text, duration);
                                         toast.show();

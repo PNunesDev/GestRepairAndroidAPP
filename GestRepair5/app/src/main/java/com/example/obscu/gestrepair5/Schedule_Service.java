@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -35,10 +37,11 @@ import java.util.Map;
 
 public class Schedule_Service extends AppCompatActivity {
 
-    RequestQueue rq;
+    RequestQueue rq, queue;
 
     TextView Registration, Service, Date;
-    String SRegistration, SService, SDate;
+    String SRegistration, SService, SDate, SIDScheduleService;
+    Button RemoveSchedule;
 
     String username,password, iduser;
 
@@ -48,11 +51,13 @@ public class Schedule_Service extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_schedule_service);
         rq = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);
 
 
         Registration = (TextView) findViewById(R.id.txtRegistrationValue);
         Service = (TextView) findViewById(R.id.txt_ServiceValue);
         Date = (TextView) findViewById(R.id.txtDateValue);
+        RemoveSchedule = (Button) findViewById(R.id.btn_CancelSchedule);
 
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
@@ -81,6 +86,7 @@ public class Schedule_Service extends AppCompatActivity {
                     //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
                     JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
 
+                    SIDScheduleService = jsonObject.getString("idSchedule");
                     SRegistration = jsonObject.getString("vehicle");
                     SService = jsonObject.getString("service");
                     SDate = jsonObject.getString("date");
@@ -92,6 +98,58 @@ public class Schedule_Service extends AppCompatActivity {
                     Service.setText(SService);
                     Date.setText(SDate);
 
+                    RemoveSchedule.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String url = ip.stIp() + "/schedule/disable/"+SIDScheduleService;
+
+                            StringRequest postRequest = new StringRequest(Request.Method.GET, url,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            // response
+
+                                            String[] data = new String[1];
+                                            data[0] = iduser;
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Context context = getApplicationContext();
+                                            CharSequence text = "Error!";
+                                            int duration = Toast.LENGTH_LONG;
+                                            Toast toast = Toast.makeText(context, text, duration);
+                                            toast.show();
+                                        }
+                                    }
+                            ) {
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("id", iduser);
+                                    return params;
+                                }
+
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    try {
+                                        Map<String, String> map = new HashMap<String, String>();
+                                        String key = "Authorization";
+                                        String encodedString = Base64.encodeToString(String.format("%s:%s", username, password).getBytes(), Base64.NO_WRAP);
+                                        String value = String.format("Basic %s", encodedString);
+                                        map.put(key, value);
+                                        return map;
+                                    } catch (Exception e) {
+                                        Log.d("Tag","denied");
+                                    }
+
+                                    return super.getHeaders();
+                                }
+                            };
+
+                            queue.add(postRequest);
+                        }
+                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();

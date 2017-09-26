@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,24 +18,32 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Vehicle extends AppCompatActivity {
-    RequestQueue rq;
+    RequestQueue rq, queue;
 
-     TextView Registration, CC, Km, Fuel, RegisterDate, FrontTire, BackTire,  txtRegistration;
-    String SRegistration, SCC, SKm, SFuel, SRegisterDate, SFrontTire, SBackTire;
+    TextView Registration, CC, Km, Fuel, RegisterDate, FrontTire, BackTire,  txtRegistration, txtIdVehicle, txtVehicle;
+    String SRegistration, SCC, SKm, SFuel, SRegisterDate, SFrontTire, SBackTire, SIdVehicle, SVehicleModel, SVehicleBrand;
+    Button RemoveVehicle;
 
-    String username, password, iduser;
+    ArrayList<String> info;
+
+    String username, password, iduser, dataJ;
 
     Ip ip = new Ip();
 
@@ -42,8 +51,10 @@ public class Vehicle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_vehicle);
         rq = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);
 
-
+        txtVehicle = (TextView) findViewById(R.id.txt_Vehicle);
+       // txtIdVehicle = (TextView) findViewById(R.id.txtIdVehicle);
         Registration = (TextView) findViewById(R.id.txtRegistrationValue);
         txtRegistration = (TextView) findViewById(R.id.txt_StatValue);
         CC = (TextView) findViewById(R.id.txtCCValue);
@@ -52,16 +63,17 @@ public class Vehicle extends AppCompatActivity {
         RegisterDate = (TextView) findViewById(R.id.txtDateRegisterValue);
         FrontTire = (TextView) findViewById(R.id.txtFrontTireValue);
         BackTire = (TextView) findViewById(R.id.txtBackTireValue);
+        RemoveVehicle = (Button) findViewById(R.id.btnRemoveVehicle);
 
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
         iduser = Intent.getStringExtra("iduser");
-        String url= ip.stIp()+"/vehicle/"+iduser+"/user";
-        Log.i("TAG",url+" TESTE");
+        dataJ="";
 
+        String url = ip.stIp() + "/vehicle/" + iduser + "/user";
         sendjsonrequest(url);
-    }
+        }
 
     public void sendjsonrequest(String url){
 
@@ -77,10 +89,14 @@ public class Vehicle extends AppCompatActivity {
                     Log.i("TAG", intValue+"");
 
 
-                    //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
-                    JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
 
+                    //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
+                    final JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
+
+                    SVehicleBrand = jsonObject.getString("nameBrand");
+                    SVehicleModel = jsonObject.getString("nameModel");
                     SRegistration = jsonObject.getString("registration");
+                    SIdVehicle=jsonObject.getString("idVehicle");
                     SCC = jsonObject.getString("displacement");
                     SKm = jsonObject.getString("kilometers");
                     SFuel = jsonObject.getString("nameFuel");
@@ -91,22 +107,74 @@ public class Vehicle extends AppCompatActivity {
                     DateTime TM = new DateTime();
                     SRegisterDate=TM.DateTime(SRegisterDate);
 
+                    txtVehicle.setText(SVehicleBrand+" - "+SVehicleModel);
                     Registration.setText(SRegistration);
                     CC.setText(SCC);
+                    //txtIdVehicle.setText(SIdVehicle);
                     Km.setText(SKm);
                     Fuel.setText(SFuel);
                     RegisterDate.setText(SRegisterDate);
                     FrontTire.setText(SFrontTire);
                     BackTire.setText(SBackTire);
 
-                } catch (JSONException e) {
+                    RemoveVehicle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String url = ip.stIp() + "/vehicle/" + SIdVehicle;
+                           final String dataJ = jsonObject.toString();
+
+                            StringRequest postRequest = new StringRequest(Request.Method.PUT, url,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            // response
+
+                                            String[] data = new String[2];
+                                            data[0] = iduser;
+                                            data[1] = dataJ;
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                        }
+                                    }
+                            ) {
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("id", iduser);
+                                    params.put("vehicle", dataJ);
+                                    return params;
+                                }
+
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    try {
+                                        Map<String, String> map = new HashMap<String, String>();
+                                        String key = "Authorization";
+                                        String encodedString = Base64.encodeToString(String.format("%s:%s", username, password).getBytes(), Base64.NO_WRAP);
+                                        String value = String.format("Basic %s", encodedString);
+                                        map.put(key, value);
+                                        return map;
+                                    } catch (Exception e) {
+                                        Log.d("Tag","denied");
+                                    }
+
+                                    return super.getHeaders();
+                                }
+                            };
+
+                            queue.add(postRequest);
+                        }
+                    });
+                }
+                catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //typeService.setText("Ups, ocorreu um erro");
 
             }
         }) {
@@ -120,5 +188,6 @@ public class Vehicle extends AppCompatActivity {
             }
         };
         rq.add(jsonObjectRequest);
+
     }
 }

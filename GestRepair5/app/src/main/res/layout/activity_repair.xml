@@ -7,7 +7,7 @@
     tools:context="com.example.obscu.gestrepair5.Repair">
 
 
-    <android.support.v7.widget.Toolbar
+   <!-- <android.support.v7.widget.Toolbar
         android:id="@+id/appBarLayout6"
         android:layout_width="381dp"
         android:layout_height="58dp"
@@ -24,10 +24,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
-        app:layout_constraintHorizontal_bias="0.461" />
+        app:layout_constraintHorizontal_bias="0.461" /> -->
 
 
-    <include
+  <!--  <include
         layout="@layout/content_repair"
         android:layout_height="0dp"
         android:layout_width="0dp"
@@ -41,7 +41,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/include6"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0" /> -->
 
     <TextView
         android:id="@+id/txt_Repair_RepairData_Value"

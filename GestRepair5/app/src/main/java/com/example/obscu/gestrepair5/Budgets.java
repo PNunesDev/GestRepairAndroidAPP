@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -30,11 +32,12 @@ import java.util.Map;
 
 public class Budgets extends AppCompatActivity {
 
-    RequestQueue rq;
+    RequestQueue rq,queue;
 
     TextView txtRegistration, txtState, txtPrice, txtProcess, txtRepair;
+    Button RemoveBudget, ApproveBudget;
 
-    String SRegistration, SState, SPrice, SProcess, SRepair;
+    String SRegistration, SState, SPrice, SProcess, SRepair, SIdBudget, dataJ;
 
     String username, password, iduser;
     Ip ip = new Ip();
@@ -44,12 +47,15 @@ public class Budgets extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budgets);
         rq = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);
 
         txtRegistration = (TextView) findViewById(R.id.txt_RegistrationValue);
         txtState = (TextView) findViewById(R.id.txt_StatValue);
         txtPrice = (TextView) findViewById(R.id.txt_PriceValue);
         txtProcess= (TextView) findViewById(R.id.txt_StateValue);
         txtRepair = (TextView) findViewById(R.id.txt_RepairTimeValue);
+        RemoveBudget = (Button) findViewById(R.id.btn_RemoveBudget);
+        ApproveBudget = (Button) findViewById(R.id.btn_ApproveBudget);
 
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
@@ -76,12 +82,13 @@ public class Budgets extends AppCompatActivity {
 
 
                     //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
-                    JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
+                    final JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
                     SRegistration = jsonObject.getString("vehicle");
                     SState = jsonObject.getString("state");
                     SPrice = jsonObject.getString("price");
                     SProcess = jsonObject.getString("processOpen");
                     SRepair = jsonObject.getString("repairTime");
+                    SIdBudget = jsonObject.getString("idBudget");
 
                     DateTime TM = new DateTime();
                     //SRepair=TM.DateTime(SRepair);
@@ -100,6 +107,66 @@ public class Budgets extends AppCompatActivity {
                    /* priceService.setText(jdescription);
                     descriptionService.setText(jdescription);
                     imageService.setText(jimage);*/
+                    /*
+                   if (SState!="Em Aprovação"){
+                       RemoveBudget.setVisibility(View.INVISIBLE);
+                       ApproveBudget.setVisibility(View.INVISIBLE);
+                   }
+                   else{
+                       RemoveBudget.setVisibility(View.VISIBLE);
+                       ApproveBudget.setVisibility(View.VISIBLE);
+                   }
+                   */
+
+                    ApproveBudget.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String url = ip.stIp() + "/budget/"+iduser+"/aprove/";
+                            final String dataJ = jsonObject.toString();
+
+                            StringRequest postRequest = new StringRequest(Request.Method.PUT, url,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            // response
+
+                                            String[] data = new String[2];
+                                            data[0] = iduser;
+                                            data[1] = "3";
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                        }
+                                    }
+                            ) {
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("state", "3");
+                                    return params;
+                                }
+
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    try {
+                                        Map<String, String> map = new HashMap<String, String>();
+                                        String key = "Authorization";
+                                        String encodedString = Base64.encodeToString(String.format("%s:%s", username, password).getBytes(), Base64.NO_WRAP);
+                                        String value = String.format("Basic %s", encodedString);
+                                        map.put(key, value);
+                                        return map;
+                                    } catch (Exception e) {
+                                        Log.d("Tag","denied");
+                                    }
+
+                                    return super.getHeaders();
+                                }
+                            };
+
+                            queue.add(postRequest);
+                        }
+                    });
 
 
                 } catch (JSONException e) {

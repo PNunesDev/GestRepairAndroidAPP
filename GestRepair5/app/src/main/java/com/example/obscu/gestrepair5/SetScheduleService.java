@@ -1,7 +1,12 @@
 package com.example.obscu.gestrepair5;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,10 +17,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+import android.text.format.DateFormat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,17 +40,33 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-public class SetScheduleService extends AppCompatActivity {
+public class SetScheduleService extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener{
     RequestQueue rq,rq2;
     String name;
     ListView list;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     String username,password,iduser;
+    Button btnDate, btnHour;
+    EditText etxtDate, etxtHour;
+    int year, month, day, hour, minutes;
+    int yearfinal, monthfinal, dayfinal, hourfinal, minutesfinal;
+
+    private static final String HOUR = "hour";
+    private static final String MINUTE = "minute";
+    private static final String IS_24_HOUR = "is24hour";
+
+
+
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     ArrayList<String> Service = new ArrayList<String>();
+    ArrayList<String> Hours = new ArrayList<String>();
     Ip ip = new Ip();
     String url2 = ip.stIp() + "/service";
 
@@ -50,6 +76,25 @@ public class SetScheduleService extends AppCompatActivity {
         setContentView(R.layout.content_schedule__service);
         rq = Volley.newRequestQueue(this);
         rq2 = Volley.newRequestQueue(this);
+
+        btnDate = (Button) findViewById(R.id.btnDate);
+        btnHour = (Button) findViewById(R.id.btn_Hour);
+        etxtDate = (EditText) findViewById(R.id.etxtDate);
+
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(SetScheduleService.this, SetScheduleService.this,
+                        year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
 
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
@@ -141,4 +186,31 @@ public class SetScheduleService extends AppCompatActivity {
 
         rq2.add(jsonObjectRequest2);
     }
+
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        yearfinal = year;
+        monthfinal = month+1;
+        dayfinal = dayOfMonth;
+
+        Calendar cal = Calendar.getInstance();
+        hour=cal.get(Calendar.HOUR_OF_DAY);
+        minutes=cal.get(Calendar.MINUTE);
+        etxtDate.setText(dayfinal+"/"+monthfinal+"/"+dayfinal);
+
+        for (int i = 8; i <=12; i++) {
+            Hours.add(i+"");
+        }
+        for (int i = 14; i <=17; i++) {
+            Hours.add(i+"");
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(SetScheduleService.this, R.layout.activity_list_vehicles_main, Hours);
+        Spinner spinnerService = (Spinner) findViewById(R.id.spn_hours);
+        spinnerService.setAdapter(adapter);
+    }
+
+
+
 }

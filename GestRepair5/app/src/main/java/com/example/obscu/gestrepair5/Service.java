@@ -2,8 +2,12 @@ package com.example.obscu.gestrepair5;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,11 +32,12 @@ public class Service extends Activity {
     RequestQueue rq;
 
     TextView typeService, priceService, descriptionService, imageService, googlePlusUrlText;
+    ImageView iService;
 
-    String name, description, jdescription, jimage, gplusUrl;
+    String name, description, jdescription, jimage, gplusUrl, iDService;
 
     Ip ip = new Ip();
-    String url= ip.stIp()+"/service";
+    String url = ip.stIp() + "/service";
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +48,13 @@ public class Service extends Activity {
         typeService = (TextView) findViewById(R.id.ServiceType);
         priceService = (TextView) findViewById(R.id.ServicePrice);
         descriptionService = (TextView) findViewById(R.id.ServiceDescription);
-        imageService = (TextView) findViewById(R.id.ServiceImage);
-
-
+        iService = (ImageView) findViewById(R.id.imgService);
 
         sendjsonrequest();
+
     }
 
-    public void sendjsonrequest(){
+    public void sendjsonrequest() {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -59,35 +64,42 @@ public class Service extends Activity {
                     jsonArray = response.getJSONArray("data");
                     Intent Intent = getIntent();
                     int intValue = Intent.getIntExtra("position", 0);
-                    Log.i("TAG", intValue+"");
+                    Log.i("TAG", intValue + "");
 
-
-                    //JSONObject jsonObject = (JSONObject) jsonArray.get(extras.getInt("ServiceType"));
                     JSONObject jsonObject = (JSONObject) jsonArray.get(intValue);
+                    iDService = jsonObject.getString("idService");
                     name = jsonObject.getString("nameService");
                     jdescription = jsonObject.getString("priceService");
-                    jdescription = jsonObject.getString("description");
-                    jimage=jsonObject.getString("photo");
+                    description = jsonObject.getString("description");
+                    jimage = jsonObject.getString("photo");
 
                     typeService.setText(name);
-                    priceService.setText(jdescription);
-                    descriptionService.setText(jdescription);
-                    imageService.setText(jimage);
-
+                    priceService.setText(jdescription+"€");
+                    descriptionService.setText(description);
+                    //imageService.setText(jimage);
+                    getJsonImage(iDService);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 typeService.setText("Ups, ocorreu um erro");
-
             }
         });
 
         rq.add(jsonObjectRequest);
+
+    }
+
+    private void getJsonImage(String iDService) {
+        String url2 = ip.stIp() + "/service/img/" + iDService;
+        Glide.with(this).load(url2).into(iService);
+
     }
 }
 

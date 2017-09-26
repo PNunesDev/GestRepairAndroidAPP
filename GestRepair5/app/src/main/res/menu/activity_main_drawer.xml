@@ -4,11 +4,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/ListServices"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_menu_manage"
             android:title="Serviços" />
         <item
             android:id="@+id/Login"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@android:drawable/ic_secure"
             android:title="Autenticar" />
     </group>
 
@@ -20,7 +20,7 @@
                 android:title="Listar Veículos" />
             <item
                 android:id="@+id/ListSchedules"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@android:drawable/ic_lock_idle_alarm"
                 android:title="Ver Agendamentos" />
             <item
                 android:id="@+id/ScheduleService"
