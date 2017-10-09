@@ -1,18 +1,16 @@
-package com.example.obscu.gestrepair5;
+package gestrepair;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,26 +29,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ListScheduleService extends AppCompatActivity {
+public class ListBudgets extends AppCompatActivity {
 
     RequestQueue rq;
     ListView list;
-    String username,password,iduser;
+    String username, password, iduser;
 
     ArrayList<String> Vehicles = new ArrayList<String>();
     Ip ip = new Ip();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_schedule);
+        setContentView(R.layout.activity_list_budgets);
+        rq = Volley.newRequestQueue(this);
+
         Intent Intent = getIntent();
         username = Intent.getStringExtra("username");
         password = Intent.getStringExtra("password");
         iduser = Intent.getStringExtra("iduser");
-        String url = ip.stIp() + "/schedule/"+iduser;
-        rq = Volley.newRequestQueue(this);
+        String url = ip.stIp() + "/budget/"+iduser;
+        Log.i("TAG", url+" IP");
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -59,21 +58,24 @@ public class ListScheduleService extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray data = (JSONArray) response.get("data");
+
                     String[][] name = new String[data.length()][3];
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject datas = (JSONObject) data.get(i);
-                        name[i][0] = datas.getString("idSchedule");
+                        name[i][0] = datas.getString("idBudget");
                         name[i][1] = datas.getString("vehicle");
-                        Vehicles.add("Marcação Nº "+name[i][0] + " - " + name[i][1]);
+                        name[i][2] = datas.getString("state");
+                        Vehicles.add("Orçamento nº: "+name[i][0]+" - "+name[i][1]+" - "+name[i] [2]);
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListScheduleService.this, R.layout.activity_list_vehicles_main, Vehicles);
-                    final ListView list = (ListView) findViewById(R.id.lst_Vehicles);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListBudgets.this, R.layout.activity_list_vehicles_main, Vehicles);
+                    final ListView list = (ListView) findViewById(R.id.lst_budget);
+                    list.setAdapter(adapter);
 
                     list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent intent = new Intent(ListScheduleService.this, Schedule_Service.class);
+                            Intent intent = new Intent(ListBudgets.this, Budgets.class);
                             String[] data = new String[3];
                             data[0] = username;
                             data[1] = password;
@@ -83,14 +85,11 @@ public class ListScheduleService extends AppCompatActivity {
                             intent.putExtra("password", data[1]);
                             intent.putExtra("iduser", data[2]);
                             intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
-                            intent.putExtra("position", position);
                             intent.putExtras(bundle);
-
-                            startActivity(intent);
+                            startActivityForResult(intent, 2404);
+                            //startActivity(intent);
                         }
                     });
-
-                    list.setAdapter(adapter);
 
 
                 } catch (JSONException e) {
@@ -107,10 +106,10 @@ public class ListScheduleService extends AppCompatActivity {
                 toast.show();
 
             }
-        }) {
+        }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String credentials = username + ":" + password;
+                String credentials = username + ":" + password ;
                 String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Basic " + base64EncodedCredentials);
@@ -119,5 +118,28 @@ public class ListScheduleService extends AppCompatActivity {
         };
 
         rq.add(jsonObjectRequest);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent= new Intent();
+                intent.putExtra("param", "value");
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == 2404) {
+            if(data != null) {
+                String value = data.getStringExtra("param");
+            }
+        }
     }
 }

@@ -1,18 +1,14 @@
-package com.example.obscu.gestrepair5;
+package gestrepair;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -101,7 +97,7 @@ public class Budgets extends AppCompatActivity {
 
                     txtRegistration.setText(SRegistration);
                     txtState.setText(SState);
-                    txtPrice.setText(SPrice);
+                    txtPrice.setText(SPrice+"€");
                     txtProcess.setText(TM.DateTime(SProcess));
                     txtRepair.setText(SRepair+" dias");
                    /* priceService.setText(jdescription);
@@ -191,6 +187,29 @@ public class Budgets extends AppCompatActivity {
             }
         };
         rq.add(jsonObjectRequest);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent= new Intent();
+                intent.putExtra("param", "value");
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == 2404) {
+            if(data != null) {
+                String value = data.getStringExtra("param");
+            }
+        }
     }
 }
 

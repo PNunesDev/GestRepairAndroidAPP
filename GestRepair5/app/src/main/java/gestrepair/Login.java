@@ -1,18 +1,13 @@
-package com.example.obscu.gestrepair5;
+package gestrepair;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,23 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -131,9 +117,9 @@ public class Login extends AppCompatActivity {
                                         int duration = Toast.LENGTH_LONG;
                                         Toast toast = Toast.makeText(context, text, duration);
                                         toast.show();
-                                    } else if( error instanceof TimeoutError) {
+                                    } else if( error instanceof NoConnectionError) {
                                         Context context = getApplicationContext();
-                                        CharSequence text = "Não existe ligação de rede. Certifiquese de que está ligado a uma rede Wi-Fi ou móvel e tente novamente";
+                                        CharSequence text = "Não existe ligação de rede. Certifique-se de que está ligado a uma rede Wi-Fi ou móvel e tente novamente";
                                         int duration = Toast.LENGTH_LONG;
                                         Toast toast = Toast.makeText(context, text, duration);
                                         toast.show();

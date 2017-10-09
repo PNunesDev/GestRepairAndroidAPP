@@ -1,7 +1,8 @@
-package com.example.obscu.gestrepair5;
+package gestrepair;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
 
 public class Configurations extends AppCompatActivity {
 

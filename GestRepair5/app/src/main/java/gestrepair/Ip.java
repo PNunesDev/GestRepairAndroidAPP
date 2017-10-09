@@ -1,4 +1,4 @@
-package com.example.obscu.gestrepair5;
+package gestrepair;
 
 /**
  * Created by Obscu on 26/07/2017.

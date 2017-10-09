@@ -1,31 +1,21 @@
-package com.example.obscu.gestrepair5;
+package gestrepair;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-import android.text.format.DateFormat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -43,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class SetScheduleService extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener{
     RequestQueue rq,rq2;
@@ -209,6 +198,29 @@ public class SetScheduleService extends AppCompatActivity  implements DatePicker
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(SetScheduleService.this, R.layout.activity_list_vehicles_main, Hours);
         Spinner spinnerService = (Spinner) findViewById(R.id.spn_hours);
         spinnerService.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent= new Intent();
+                intent.putExtra("param", "value");
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == 2404) {
+            if(data != null) {
+                String value = data.getStringExtra("param");
+            }
+        }
     }
 
 

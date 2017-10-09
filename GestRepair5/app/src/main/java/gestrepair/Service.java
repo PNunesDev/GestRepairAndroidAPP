@@ -1,15 +1,12 @@
-package com.example.obscu.gestrepair5;
+package gestrepair;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,7 +24,7 @@ import org.json.JSONObject;
  * Created by Obscu on 31/07/2017.
  */
 
-public class Service extends Activity {
+public class Service extends AppCompatActivity {
 
     RequestQueue rq;
 
@@ -44,6 +41,7 @@ public class Service extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.services);
         rq = Volley.newRequestQueue(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         typeService = (TextView) findViewById(R.id.ServiceType);
         priceService = (TextView) findViewById(R.id.ServicePrice);
@@ -100,6 +98,29 @@ public class Service extends Activity {
         String url2 = ip.stIp() + "/service/img/" + iDService;
         Glide.with(this).load(url2).into(iService);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent= new Intent();
+                intent.putExtra("param", "value");
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == 2404) {
+            if(data != null) {
+                String value = data.getStringExtra("param");
+            }
+        }
     }
 }
 

@@ -1,21 +1,19 @@
-package com.example.obscu.gestrepair5;
+package gestrepair;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Base64;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -76,17 +74,6 @@ public class MainActivity extends AppCompatActivity
 
        /* if(response!=null)
         response.substring(response.indexOf("idUser:") + 1 , response.length());*/
-
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -190,7 +177,7 @@ public class MainActivity extends AppCompatActivity
                             intent.putExtra("ServiceType", list.getItemAtPosition(position).toString());
                             intent.putExtra("position", position);
                             intent.putExtras(bundle);
-                            startActivity(intent);
+                            startActivityForResult(intent,1);
                         }
                     });
                     list.setAdapter(adapter);
@@ -356,7 +343,8 @@ public class MainActivity extends AppCompatActivity
                 i.putExtra("password", data[1]);
                 i.putExtra("iduser", data[2]);
                 i.putExtras(bundle);
-                startActivity(i);
+                startActivityForResult(i, 2404);
+                //startActivity(i);
             }
 
         //4 - Ver Agendamentos
@@ -371,7 +359,8 @@ public class MainActivity extends AppCompatActivity
             i.putExtra("password", data[1]);
             i.putExtra("iduser", data[2]);
             i.putExtras(bundle);
-            startActivity(i);
+            startActivityForResult(i, 2404);
+            //startActivity(i);
 
         //5 - Agendar Serviços
         } else if (id == R.id.ScheduleService) {
@@ -385,7 +374,8 @@ public class MainActivity extends AppCompatActivity
             i.putExtra("password", data[1]);
             i.putExtra("iduser", data[2]);
             i.putExtras(bundle);
-            startActivity(i);
+            startActivityForResult(i, 2404);
+            //startActivity(i);
 
         //6 - Ver Reparação
         } else if (id == R.id.ListRepairs) {
@@ -399,7 +389,8 @@ public class MainActivity extends AppCompatActivity
             i.putExtra("password", data[1]);
             i.putExtra("iduser", data[2]);
             i.putExtras(bundle);
-            startActivity(i);
+            startActivityForResult(i, 2404);
+            //startActivity(i);
 
         //7 - Ver Orçamentos
         } else if (id == R.id.ListBudgets) {
@@ -413,12 +404,22 @@ public class MainActivity extends AppCompatActivity
             i.putExtra("password", data[1]);
             i.putExtra("iduser", data[2]);
             i.putExtras(bundle);
-            startActivity(i);
+            startActivityForResult(i, 2404);
+            //startActivity(i);
         }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == 2404) {
+            if(data != null) {
+                String value = data.getStringExtra("param");
+            }
+        }
     }
 }
