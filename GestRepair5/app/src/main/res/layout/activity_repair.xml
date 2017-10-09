@@ -6,195 +6,186 @@
     android:layout_height="match_parent"
     tools:context="com.example.obscu.gestrepair5.Repair">
 
+ <TextView
+     android:id="@+id/txt_Repair_Registration_Value"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginLeft="8dp"
+     android:layout_marginRight="8dp"
+     android:layout_marginTop="16dp"
+     android:text="Viatura:"
+     android:textSize="36sp"
+     app:layout_constraintHorizontal_bias="0.0"
+     app:layout_constraintLeft_toLeftOf="parent"
+     app:layout_constraintRight_toRightOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     android:layout_marginStart="136dp"
+     android:layout_marginEnd="8dp" />
 
-   <!-- <android.support.v7.widget.Toolbar
-        android:id="@+id/appBarLayout6"
-        android:layout_width="381dp"
-        android:layout_height="58dp"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="8dp"
+    <LinearLayout
+        android:layout_width="337dp"
+        android:layout_height="295dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Registration_Value"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintHorizontal_bias="0.461" /> -->
-
-
-  <!--  <include
-        layout="@layout/content_repair"
-        android:layout_height="0dp"
-        android:layout_width="0dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout6"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:id="@+id/include6"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintVertical_bias="0.0" /> -->
-
-    <TextView
-        android:id="@+id/txt_Repair_RepairData_Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="175dp"
-        android:layout_marginTop="19dp"
-        android:text="Dados de Reparação:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_UserDiagnosis" />
-
-    <TextView
-        android:id="@+id/txt_Repair_Out_Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="182dp"
-        android:layout_marginTop="15dp"
-        android:text="Saída:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Entry" />
-
-    <TextView
-        android:id="@+id/txt_Repair_Status_Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="182dp"
-        android:layout_marginTop="47dp"
-        android:text="Estado:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_Repair_RepairData" />
-
-    <TextView
-        android:id="@+id/txt_Repair_Registration_Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="182dp"
-        android:layout_marginTop="15dp"
-        android:text="Viatura:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Title_Repair" />
-
-    <TextView
-        android:id="@+id/txt_Repair_Entry_Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="182dp"
-        android:layout_marginTop="23dp"
-        android:text="Entrada:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Status" />
-
-    <TextView
-        android:id="@+id/txt_Repair_UserDiagnosis_Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="181dp"
-        android:layout_marginTop="19dp"
-        android:text="Diagonóstico do Utilizador:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Price" />
-
-    <TextView
-        android:id="@+id/txt_Repair_Price_Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="182dp"
-        android:layout_marginTop="15dp"
-        android:text="Preço:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Registration" />
-
-    <TextView
-        android:id="@+id/txt_Title_Repair"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="17dp"
-        android:text="Relatório de Reparação"
-        android:textSize="30sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include6"
-        app:layout_constraintHorizontal_bias="0.508" />
+        app:layout_constraintLeft_toLeftOf="parent">
 
-    <TextView
-        android:id="@+id/txt_Repair_Registration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Viatura:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Title_Repair" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txt_Repair_Price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Preço:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Registration" />
+            <TextView
+                android:id="@+id/txt_Repair_UserDiagnosis"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Diagonóstico do Utilizador:" />
 
-    <TextView
-        android:id="@+id/txt_Repair_UserDiagnosis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Diagonóstico do Utilizador:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Price" />
+            <TextView
+                android:id="@+id/txt_Repair_UserDiagnosis_Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="8dp"
+                android:text="Diagonóstico do Utilizador:" />
 
-    <TextView
-        android:id="@+id/txt_Repair_RepairData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="12dp"
-        android:text="Dados de Reparação:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_UserDiagnosis" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/txt_Repair_Status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="39dp"
-        android:text="Estado:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_Repair_RepairData" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txt_Repair_Entry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Entrada:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Status" />
+            <TextView
+                android:id="@+id/txt_Repair_RepairData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="Dados de Reparação:"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_Repair_UserDiagnosis" />
 
-    <TextView
-        android:id="@+id/txt_Repair_Out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Saída:"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Entry" />
+            <TextView
+                android:id="@+id/txt_Repair_RepairData_Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="19dp"
+                android:text="Dados de Reparação:" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_Repair_Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Estado:" />
+
+            <TextView
+                android:id="@+id/txt_Repair_Status_Value"
+                android:layout_width="228dp"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_Repair_Out_Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saída:" />
+
+
+            <TextView
+                android:id="@+id/txt_Repair_Out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.07"
+                android:text="Saída:"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Entry" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.78">
+
+            <TextView
+                android:id="@+id/txt_Repair_Price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Preço:" />
+
+            <TextView
+                android:id="@+id/txt_Repair_Price_Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="182dp"
+                android:text="Preço:" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp">
+
+
+            <TextView
+                android:id="@+id/txt_Repair_Entry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="Entrada:"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Status" />
+
+            <TextView
+                android:id="@+id/txt_Repair_Entry_Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="182dp"
+                android:layout_marginStart="182dp"
+                android:layout_marginTop="23dp"
+                android:layout_weight="1"
+                android:text="Entrada:"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_Repair_Status" />
+        </LinearLayout>
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

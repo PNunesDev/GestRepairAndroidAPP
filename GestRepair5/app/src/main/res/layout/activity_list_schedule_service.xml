@@ -4,96 +4,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.example.obscu.gestrepair5.ListScheduleService">
 
 
     <TextView
-        android:id="@+id/txt_Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ver Reparações"
-        android:textSize="30sp"
+        android:id="@+id/txtRegistrationValue"
+        android:layout_width="182dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="76dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="1"
+        android:textAlignment="gravity"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        app:layout_constraintHorizontal_bias="0.788"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        tools:layout_editor_absoluteY="77dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtRegistration"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Matricula"
-        android:layout_marginTop="49dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Title"
-        android:layout_marginLeft="44dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toTopOf="@+id/btn_CancelSchedule"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegistrationValue"
+        app:layout_constraintVertical_bias="0.197"
+        tools:layout_editor_absoluteX="0dp">
 
-    <TextView
-        android:id="@+id/txt_Service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Serviço"
-        android:layout_marginTop="2dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegistration"
-        android:layout_marginLeft="40dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        <TextView
+            android:id="@+id/txt_Service"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorPrimary"
+            android:textAlignment="gravity"
+            android:gravity="center"
+            android:text="Serviço"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegistrationValue" />
 
-    <TextView
-        android:id="@+id/etxtDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Data"
-        android:layout_marginTop="3dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Service"
-        android:layout_marginLeft="38dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        <TextView
+            android:id="@+id/txt_ServiceValue"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:textAlignment="gravity"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@color/black"
+            android:background="@color/backwhite"
+            android:textSize="30dp"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_Service" />
+
+        <TextView
+            android:id="@+id/etxtDate"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:textAlignment="gravity"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:text="Data"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_ServiceValue" />
+
+        <TextView
+            android:id="@+id/txtDateValue"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:textAlignment="gravity"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/black"
+            android:background="@color/backwhite"
+            android:textSize="30dp"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etxtDate" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_CancelSchedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancelar"
-        android:layout_marginTop="199dp"
-        app:layout_constraintTop_toBottomOf="@+id/etxtDate"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="87dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.526"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/txtRegistrationValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        android:layout_marginTop="57dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Title"
-        app:layout_constraintLeft_toRightOf="@+id/txtRegistration"
-        android:layout_marginLeft="92dp" />
-
-    <TextView
-        android:id="@+id/txt_ServiceValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2"
+        android:layout_marginStart="87dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegistrationValue"
-        app:layout_constraintLeft_toRightOf="@+id/txt_Service"
-        android:layout_marginLeft="8dp" />
-
-    <TextView
-        android:id="@+id/txtDateValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_ServiceValue"
-        app:layout_constraintLeft_toRightOf="@+id/etxtDate"
-        android:layout_marginLeft="8dp" />
+        android:text="Cancelar Agendamento"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.846" />
 
 
 </android.support.constraint.ConstraintLayout>

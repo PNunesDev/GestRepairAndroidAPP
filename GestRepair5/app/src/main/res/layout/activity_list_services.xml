@@ -7,44 +7,12 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
 
-    <TextView
-        android:id="@+id/txtTitleServicesMenu"
-        android:layout_width="359dp"
-        android:layout_height="69dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="4dp"
-        android:text="Lista de Serviços"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="36sp"
-        app:layout_constraintHorizontal_bias="0.195"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ListView
         android:id="@+id/lst_Service"
-        android:layout_width="323dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:background="@color/white"
         android:fillViewport="true"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitleServicesMenu"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        android:textSize="20sp" />
 </android.support.constraint.ConstraintLayout>
